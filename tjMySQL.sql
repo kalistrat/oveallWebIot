@@ -1,0 +1,124 @@
+-- --------------------------------------------------------
+-- Хост:                         127.0.0.1
+-- Версия сервера:               5.5.23 - MySQL Community Server (GPL)
+-- Операционная система:         Win64
+-- HeidiSQL Версия:              9.4.0.5125
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- Дамп структуры для таблица teljournal.device_status
+CREATE TABLE IF NOT EXISTS `device_status` (
+  `DEVICE_STATUS_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `STATUS_DATE` datetime DEFAULT NULL,
+  `SOLD_DEVICE_ID` int(11) NOT NULL,
+  `STATUS_ID` int(11) NOT NULL,
+  PRIMARY KEY (`DEVICE_STATUS_ID`),
+  KEY `FK_DEVICE_STATUS_sold_devices` (`SOLD_DEVICE_ID`),
+  KEY `FK_device_status_status` (`STATUS_ID`),
+  CONSTRAINT `FK_DEVICE_STATUS_sold_devices` FOREIGN KEY (`SOLD_DEVICE_ID`) REFERENCES `sold_devices` (`SOLD_DEVICE_ID`),
+  CONSTRAINT `FK_device_status_status` FOREIGN KEY (`STATUS_ID`) REFERENCES `status` (`STATUS_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- Дамп данных таблицы teljournal.device_status: ~1 rows (приблизительно)
+DELETE FROM `device_status`;
+/*!40000 ALTER TABLE `device_status` DISABLE KEYS */;
+INSERT INTO `device_status` (`DEVICE_STATUS_ID`, `STATUS_DATE`, `SOLD_DEVICE_ID`, `STATUS_ID`) VALUES
+	(1, '2018-03-11 17:03:58', 1, 1);
+/*!40000 ALTER TABLE `device_status` ENABLE KEYS */;
+
+-- Дамп структуры для процедура teljournal.pAddNewUID
+DELIMITER //
+CREATE DEFINER=`kalistrat`@`localhost` PROCEDURE `pAddNewUID`(
+	IN `eUID` VARCHAR(50)
+
+
+)
+BEGIN
+
+insert into sold_devices(uid,DATE_FROM)
+values(eUID,sysdate());
+
+END//
+DELIMITER ;
+
+-- Дамп структуры для таблица teljournal.sold_devices
+CREATE TABLE IF NOT EXISTS `sold_devices` (
+  `SOLD_DEVICE_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `UID` varchar(50) NOT NULL,
+  `DATE_FROM` datetime DEFAULT NULL,
+  `DEVICE_STATUS_ID` int(11) NOT NULL,
+  `CURRENT_STATUS_CODE` varchar(50) DEFAULT NULL,
+  `USER_ID` int(11) DEFAULT NULL,
+  `SERVICE_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`SOLD_DEVICE_ID`),
+  UNIQUE KEY `UID` (`UID`),
+  KEY `FK_sold_devices_device_status` (`DEVICE_STATUS_ID`),
+  KEY `FK_sold_devices_tj_users` (`USER_ID`),
+  KEY `FK_sold_devices_user_web_services` (`SERVICE_ID`),
+  CONSTRAINT `FK_sold_devices_device_status` FOREIGN KEY (`DEVICE_STATUS_ID`) REFERENCES `device_status` (`DEVICE_STATUS_ID`),
+  CONSTRAINT `FK_sold_devices_tj_users` FOREIGN KEY (`USER_ID`) REFERENCES `tj_users` (`USER_ID`),
+  CONSTRAINT `FK_sold_devices_user_web_services` FOREIGN KEY (`SERVICE_ID`) REFERENCES `user_web_services` (`SERVICE_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Проданные устройства';
+
+-- Дамп данных таблицы teljournal.sold_devices: ~1 rows (приблизительно)
+DELETE FROM `sold_devices`;
+/*!40000 ALTER TABLE `sold_devices` DISABLE KEYS */;
+INSERT INTO `sold_devices` (`SOLD_DEVICE_ID`, `UID`, `DATE_FROM`, `DEVICE_STATUS_ID`, `CURRENT_STATUS_CODE`, `USER_ID`, `SERVICE_ID`) VALUES
+	(1, 'BRI-S23423BJB234', '2018-03-10 19:39:30', 1, 'OUTSIDE', NULL, NULL);
+/*!40000 ALTER TABLE `sold_devices` ENABLE KEYS */;
+
+-- Дамп структуры для таблица teljournal.status
+CREATE TABLE IF NOT EXISTS `status` (
+  `STATUS_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `STATUS_CODE` varchar(50) NOT NULL,
+  `STATUS_NAME` varchar(50) NOT NULL,
+  PRIMARY KEY (`STATUS_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Справочник статусов';
+
+-- Дамп данных таблицы teljournal.status: ~3 rows (приблизительно)
+DELETE FROM `status`;
+/*!40000 ALTER TABLE `status` DISABLE KEYS */;
+INSERT INTO `status` (`STATUS_ID`, `STATUS_CODE`, `STATUS_NAME`) VALUES
+	(1, 'OUTSIDE', 'Неподключено'),
+	(2, 'AWAINTING', 'Ожидает подключения'),
+	(3, 'CONNECTED', 'Подключено');
+/*!40000 ALTER TABLE `status` ENABLE KEYS */;
+
+-- Дамп структуры для таблица teljournal.tj_users
+CREATE TABLE IF NOT EXISTS `tj_users` (
+  `USER_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `USER_LOGIN` varchar(50) NOT NULL,
+  `USER_PASSWORD` varchar(150) NOT NULL,
+  `USER_MAIL` varchar(50) NOT NULL,
+  `USER_PHONE` varchar(50) NOT NULL,
+  PRIMARY KEY (`USER_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Общий справочник пользователей';
+
+-- Дамп данных таблицы teljournal.tj_users: ~2 rows (приблизительно)
+DELETE FROM `tj_users`;
+/*!40000 ALTER TABLE `tj_users` DISABLE KEYS */;
+INSERT INTO `tj_users` (`USER_ID`, `USER_LOGIN`, `USER_PASSWORD`, `USER_MAIL`, `USER_PHONE`) VALUES
+	(1, 'k', '7', 'kalique@bk.ru', '89162664924'),
+	(2, 'Oleg', '8', 'antipovoa@gmail.com', '89164646464');
+/*!40000 ALTER TABLE `tj_users` ENABLE KEYS */;
+
+-- Дамп структуры для таблица teljournal.user_web_services
+CREATE TABLE IF NOT EXISTS `user_web_services` (
+  `SERVICE_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `SERVICE_HOST` varchar(150) NOT NULL,
+  PRIMARY KEY (`SERVICE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Веб-сервисы для интеграции с личными кабинетами';
+
+-- Дамп данных таблицы teljournal.user_web_services: ~0 rows (приблизительно)
+DELETE FROM `user_web_services`;
+/*!40000 ALTER TABLE `user_web_services` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_web_services` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
