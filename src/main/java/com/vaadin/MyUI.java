@@ -6,7 +6,6 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
@@ -25,7 +24,7 @@ public class MyUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
 
         new Navigator(this, this);
-        getNavigator().addView(tLoginView.NAME, tLoginView.class);//
+        getNavigator().addView(tGuestView.NAME, tGuestView.class);//
         getNavigator().addView(tMainView.NAME,tMainView.class);
         getNavigator().addView(tRegistrationVeiw.NAME,tRegistrationVeiw.class);
 
@@ -36,17 +35,17 @@ public class MyUI extends UI {
             public boolean beforeViewChange(ViewChangeEvent event) {
 
                 boolean isLoggedIn = getSession().getAttribute("user") != null;
-                boolean isLoginView = event.getNewView() instanceof tLoginView;
+                boolean isGuestView = event.getNewView() instanceof tGuestView;
                 boolean isRegistrationView = event.getNewView() instanceof tRegistrationVeiw;
 
                 if (isRegistrationView) {
                 return true;
                 } else {
 
-                    if (!isLoggedIn && !isLoginView) {
-                        getNavigator().navigateTo(tLoginView.NAME);
+                    if (!isLoggedIn && !isGuestView) {
+                        getNavigator().navigateTo(tGuestView.NAME);
                         return false;
-                    } else if (isLoggedIn && isLoginView) {
+                    } else if (isLoggedIn && isGuestView) {
                         return false;
                     }
 

@@ -2,11 +2,9 @@ package com.vaadin;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-import org.vaadin.teemu.VaadinIcons;
 
 /**
  * Created by kalistrat on 14.12.2016.
@@ -35,7 +33,7 @@ public class tRegistrationVeiw extends CustomComponent implements View {
         ReturnLog.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                getUI().getNavigator().navigateTo(tLoginView.NAME);
+                getUI().getNavigator().navigateTo(tGuestView.NAME);
             }
         });
 
