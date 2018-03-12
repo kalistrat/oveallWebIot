@@ -1,12 +1,13 @@
 -- --------------------------------------------------------
 -- Хост:                         127.0.0.1
 -- Версия сервера:               5.5.23 - MySQL Community Server (GPL)
--- ОС Сервера:                   Win32
--- HeidiSQL Версия:              9.3.0.4984
+-- Операционная система:         Win64
+-- HeidiSQL Версия:              9.4.0.5125
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
@@ -30,6 +31,70 @@ INSERT INTO `device_status` (`DEVICE_STATUS_ID`, `STATUS_DATE`, `SOLD_DEVICE_ID`
 	(1, '2018-03-11 17:03:58', 1, 1);
 /*!40000 ALTER TABLE `device_status` ENABLE KEYS */;
 
+-- Дамп структуры для функция teljournal.fisExistsUserLogin
+DELIMITER //
+CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `fisExistsUserLogin`(
+	`eLogin` varchar(150)
+
+
+) RETURNS int(11)
+begin
+
+return(
+select case when count(*)>0 then 1 else 0 end
+from tj_users u
+where u.USER_LOGIN = eLogin
+);
+
+end//
+DELIMITER ;
+
+-- Дамп структуры для функция teljournal.fisExistsUserMail
+DELIMITER //
+CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `fisExistsUserMail`(
+	`eMail` varchar(150)
+
+
+) RETURNS int(11)
+begin
+
+return(
+select case when count(*)>0 then 1 else 0 end
+from tj_users u
+where u.USER_MAIL = eMail
+);
+
+end//
+DELIMITER ;
+
+-- Дамп структуры для функция teljournal.getUserWebServerUrl
+DELIMITER //
+CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `getUserWebServerUrl`(
+	`eUserLog` VARCHAR(50)
+
+) RETURNS varchar(150) CHARSET utf8
+    COMMENT 'проверка логина'
+BEGIN
+declare iCntUsers int;
+declare iUserWebServerUrl varchar(150);
+
+select count(*) into iCntUsers
+from tj_users u
+join user_web_servers uws on uws.SERVER_ID=u.SERVER_ID
+where u.USER_LOGIN = eUserLog;
+
+if (iCntUsers = 1) then
+	select uws.PERSONAL_WEB_URL into iUserWebServerUrl
+	from tj_users u
+	join user_web_servers uws on uws.SERVER_ID=u.SERVER_ID
+	where u.USER_LOGIN = eUserLog;
+else 
+	set iUserWebServerUrl = '';
+end if;
+
+return iUserWebServerUrl;
+END//
+DELIMITER ;
 
 -- Дамп структуры для процедура teljournal.pAddNewUID
 DELIMITER //
@@ -45,7 +110,6 @@ values(eUID,sysdate());
 
 END//
 DELIMITER ;
-
 
 -- Дамп структуры для таблица teljournal.sold_devices
 CREATE TABLE IF NOT EXISTS `sold_devices` (
@@ -73,7 +137,6 @@ INSERT INTO `sold_devices` (`SOLD_DEVICE_ID`, `UID`, `DATE_FROM`, `DEVICE_STATUS
 	(1, 'BRI-S23423BJB234', '2018-03-10 19:39:30', 1, 'OUTSIDE', NULL, NULL);
 /*!40000 ALTER TABLE `sold_devices` ENABLE KEYS */;
 
-
 -- Дамп структуры для таблица teljournal.status
 CREATE TABLE IF NOT EXISTS `status` (
   `STATUS_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -91,7 +154,6 @@ INSERT INTO `status` (`STATUS_ID`, `STATUS_CODE`, `STATUS_NAME`) VALUES
 	(3, 'CONNECTED', 'Подключено');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 
-
 -- Дамп структуры для таблица teljournal.tj_users
 CREATE TABLE IF NOT EXISTS `tj_users` (
   `USER_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -103,16 +165,16 @@ CREATE TABLE IF NOT EXISTS `tj_users` (
   PRIMARY KEY (`USER_ID`),
   KEY `FK_tj_users_user_web_servers` (`SERVER_ID`),
   CONSTRAINT `FK_tj_users_user_web_servers` FOREIGN KEY (`SERVER_ID`) REFERENCES `user_web_servers` (`SERVER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Общий справочник пользователей';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Общий справочник пользователей';
 
 -- Дамп данных таблицы teljournal.tj_users: ~2 rows (приблизительно)
 DELETE FROM `tj_users`;
 /*!40000 ALTER TABLE `tj_users` DISABLE KEYS */;
 INSERT INTO `tj_users` (`USER_ID`, `USER_LOGIN`, `USER_PASSWORD`, `USER_MAIL`, `USER_PHONE`, `SERVER_ID`) VALUES
 	(1, 'k', '7', 'kalique@bk.ru', '89162664924', 1),
-	(2, 'Oleg', '8', 'antipovoa@gmail.com', '89164646464', 1);
+	(2, 'Oleg', '8', 'antipovoa@gmail.com', '89164646464', 1),
+	(3, 'TestUser123', 'qwerty123', 'existing@mail.ru', '43534534534', 1);
 /*!40000 ALTER TABLE `tj_users` ENABLE KEYS */;
-
 
 -- Дамп структуры для таблица teljournal.user_web_servers
 CREATE TABLE IF NOT EXISTS `user_web_servers` (
@@ -129,6 +191,7 @@ DELETE FROM `user_web_servers`;
 INSERT INTO `user_web_servers` (`SERVER_ID`, `PERSONAL_WEB_URL`, `WEB_SERVICE_URL`, `COUNT_USERS`) VALUES
 	(1, 'http://localhost:8080/personal', 'http://localhost:8080/userWebService?wsdl', 2);
 /*!40000 ALTER TABLE `user_web_servers` ENABLE KEYS */;
+
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

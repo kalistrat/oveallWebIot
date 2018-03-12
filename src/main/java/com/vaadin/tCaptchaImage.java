@@ -41,8 +41,8 @@ public class tCaptchaImage implements StreamResource.StreamSource {
         drawable.setColor(Color.RED);
         drawable.setFont(new Font("Montserrat",Font.PLAIN, 20));
 
-        int ca = tUsefulFuctions.genRandInt(1,99);
-        int cb = tUsefulFuctions.genRandInt(1,99);
+        int ca = tUsefulFuctions.genRandInt(1,9);
+        int cb = tUsefulFuctions.genRandInt(1,9);
         String csign = tUsefulFuctions.genSign();
 
         if (csign.equals("+")) {

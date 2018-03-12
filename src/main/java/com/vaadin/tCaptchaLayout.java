@@ -40,8 +40,8 @@ public class tCaptchaLayout extends VerticalLayout {
         canvas.stroke();
         canvas.closePath();
 
-        int ca = tUsefulFuctions.genRandInt(1,99);
-        int cb = tUsefulFuctions.genRandInt(1,99);
+        int ca = tUsefulFuctions.genRandInt(1,9);
+        int cb = tUsefulFuctions.genRandInt(1,9);
         String csign = tUsefulFuctions.genSign();
         String genExpr = String.valueOf(ca) + "  " + csign + "  " + String.valueOf(cb);
 
@@ -66,10 +66,10 @@ public class tCaptchaLayout extends VerticalLayout {
 
         ResultTextField = new TextField();
         ResultTextField.setNullRepresentation("");
-        ResultTextField.setInputPrompt("Введите результат арифметического выражения, расположенного слева от поля");
+        ResultTextField.setInputPrompt("Введите результат арифметического выражения");
         ResultTextField.addStyleName(ValoTheme.TEXTFIELD_SMALL);
         ResultTextField.addStyleName("TopLabel");
-        ResultTextField.setWidth("570px");
+        ResultTextField.setWidth("350px");
         HorizontalLayout ContentLayout = new HorizontalLayout(
                 canvas
                 ,ResultTextField
