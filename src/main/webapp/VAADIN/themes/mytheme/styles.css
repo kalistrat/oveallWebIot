@@ -13039,3 +13039,7 @@ div.v-layout.v-horizontal.v-widget {
 .mytheme .diagram .grid path {
 	stroke-width: 0;
 }
+
+.mytheme .layout-with-borders {
+	border: 1px lightgray solid;
+}

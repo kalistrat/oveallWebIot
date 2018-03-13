@@ -5,6 +5,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.*;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import com.vaadin.uidGeneratorTabContent.uidGeneratorTabContent;
 import org.vaadin.teemu.VaadinIcons;
 
 import java.io.File;
@@ -64,14 +65,24 @@ public class tGuestView extends CustomComponent implements View {
         topButtonLayout.setWidth("100%");
         topButtonLayout.setHeight("100px");
 
+        uidGeneratorTabContent genLayout = new uidGeneratorTabContent();
+        VerticalLayout genTabCont = new VerticalLayout(
+                new Label()
+                ,genLayout
+        );
+        genTabCont.setSizeFull();
+        genTabCont.setComponentAlignment(genLayout,Alignment.MIDDLE_CENTER);
+
 
         overallWebSiteSheet = new TabSheet();
         overallWebSiteSheet.addTab(new Label("Общее"), "Общее", com.vaadin.icons.VaadinIcons.HOME);
         overallWebSiteSheet.addTab(new Label("Продукция"), "Продукция", com.vaadin.icons.VaadinIcons.FACTORY);
         overallWebSiteSheet.addTab(new Label("Подключение"), "Подключение", com.vaadin.icons.VaadinIcons.CONNECT);
         overallWebSiteSheet.addTab(new Label("Демо"), "Демо", com.vaadin.icons.VaadinIcons.CHART);
+        overallWebSiteSheet.addTab(genTabCont, "Генерация UID", com.vaadin.icons.VaadinIcons.RANDOM);
+
         overallWebSiteSheet.setWidth("100%");
-        overallWebSiteSheet.setHeight("400px");
+        overallWebSiteSheet.setHeightUndefined();
 
         VerticalLayout contentLayout = new VerticalLayout();
         contentLayout.addComponent(topButtonLayout);
