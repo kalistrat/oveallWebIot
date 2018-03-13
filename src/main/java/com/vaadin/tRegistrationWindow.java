@@ -6,8 +6,21 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.w3c.dom.Document;
 
+import javax.xml.xpath.XPathFactory;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.sql.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by kalistrat on 12.03.2018.
@@ -93,6 +106,21 @@ public class tRegistrationWindow extends Window {
                             null,
                             Notification.Type.TRAY_NOTIFICATION);
                     UI.getCurrent().removeWindow((tRegistrationWindow) clickEvent.getButton().getData());
+
+                    String sUser = LoginField.getValue();
+                    String sPass = PassWordField.getValue();
+                    String sMail = MailTextField.getValue();
+                    String sPhone = PhoneTextField.getValue();
+
+                    String userWsUrl = faddNewUser(sUser,sPass,sMail,sPhone);
+
+                    String wsRes = callUserWsToAddNewUser(
+                            sUser
+                            ,tUsefulFuctions.sha256(sPass)
+                            ,sMail
+                            ,sPhone
+                            ,userWsUrl
+                    );
 
                 }
 
@@ -331,5 +359,92 @@ public class tRegistrationWindow extends Window {
             System.out.println("Ошибка отправки письма на :" + to);
         }
         return isSent;
+    }
+
+    private String faddNewUser(String iUserLog,String iUserPass, String iUserMail, String iUserPhone){
+        String urlUserWs = null;
+        try {
+
+            Class.forName(com.vaadin.tUsefulFuctions.JDBC_DRIVER);
+            Connection Con = DriverManager.getConnection(
+                    com.vaadin.tUsefulFuctions.DB_URL
+                    , com.vaadin.tUsefulFuctions.USER
+                    , com.vaadin.tUsefulFuctions.PASS
+            );
+
+            String userPassSha256 = tUsefulFuctions.sha256(iUserPass);
+
+            CallableStatement Stmt = Con.prepareCall("{? = call faddNewUser(?,?,?,?)}");
+            Stmt.registerOutParameter(1, Types.VARCHAR);
+            Stmt.setString(2, iUserLog);
+            Stmt.setString(3, userPassSha256);
+            Stmt.setString(4, iUserMail);
+            Stmt.setString(5, iUserPhone);
+            Stmt.execute();
+            urlUserWs = Stmt.getString(1);
+            Con.close();
+
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+
+        }catch(Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+
+        }
+        return urlUserWs;
+    }
+
+    private String callUserWsToAddNewUser(
+            String argUser
+            ,String argPass
+            ,String argMail
+            ,String argPhone
+            ,String argUserWsUrl
+    ){
+        String respXml = null;
+        try {
+            HttpClient client = new DefaultHttpClient();
+            HttpPost post = new HttpPost(argUserWsUrl);
+            post.setHeader("Content-Type", "text/xml");
+
+            String argServLog = "userWeb045813";
+            String argServPass = "BHUerg567Sdc";
+
+            String reqBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:com=\"http://com/\">\n" +
+                    "   <soapenv:Header/>\n" +
+                    "   <soapenv:Body>\n" +
+                    "      <com:addNewUser>\n" +
+                    "         <!--Optional:-->\n" +
+                    "         <arg0>"+argUser+"</arg0>\n" +
+                    "         <!--Optional:-->\n" +
+                    "         <arg1>"+argPass+"</arg1>\n" +
+                    "         <!--Optional:-->\n" +
+                    "         <arg2>"+argMail+"</arg2>\n" +
+                    "         <!--Optional:-->\n" +
+                    "         <arg3>"+argPhone+"</arg3>\n" +
+                    "         <!--Optional:-->\n" +
+                    "         <arg4>"+argServLog+"</arg4>\n" +
+                    "         <!--Optional:-->\n" +
+                    "         <arg5>"+argServPass+"</arg5>\n" +
+                    "      </com:addNewUser>\n" +
+                    "   </soapenv:Body>\n" +
+                    "</soapenv:Envelope>";
+
+            StringEntity input = new StringEntity(reqBody, Charset.forName("UTF-8"));
+            post.setEntity(input);
+            HttpResponse response = client.execute(post);
+            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+
+            Document resXml = tUsefulFuctions.loadXMLFromString(rd.lines().collect(Collectors.joining()));
+            respXml = XPathFactory.newInstance().newXPath()
+                    .compile("//return").evaluate(resXml);
+
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return respXml;
     }
 }
