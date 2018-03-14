@@ -2,7 +2,7 @@
 Пользователь: kalistrat\045813
 
 CREATE USER 'kalistrat'@'localhost' IDENTIFIED BY '045813';
-create database things
+create database things;
 GRANT ALL PRIVILEGES ON things.* TO 'kalistrat'@'localhost';
 create database teljournal;
 GRANT ALL PRIVILEGES ON teljournal.* TO 'kalistrat'@'localhost';
