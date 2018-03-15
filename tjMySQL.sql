@@ -1,12 +1,13 @@
 -- --------------------------------------------------------
 -- Хост:                         127.0.0.1
 -- Версия сервера:               5.5.23 - MySQL Community Server (GPL)
--- ОС Сервера:                   Win32
--- HeidiSQL Версия:              9.3.0.4984
+-- Операционная система:         Win64
+-- HeidiSQL Версия:              9.4.0.5125
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
@@ -54,7 +55,6 @@ INSERT INTO `device_status` (`DEVICE_STATUS_ID`, `STATUS_DATE`, `SOLD_DEVICE_ID`
 	(26, '2018-03-15 13:48:20', 5, 2);
 /*!40000 ALTER TABLE `device_status` ENABLE KEYS */;
 
-
 -- Дамп структуры для функция teljournal.faddNewUser
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `faddNewUser`(`eUserLogin` VARCHAR(50), `eUserPass` VARCHAR(150), `eUserMail` VARCHAR(150), `eUserPhone` VARCHAR(50)
@@ -99,7 +99,6 @@ return i_ws_url;
 END//
 DELIMITER ;
 
-
 -- Дамп структуры для функция teljournal.fGetUserPassSha
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `fGetUserPassSha`(`eUserLog` VARCHAR(50)) RETURNS varchar(150) CHARSET utf8
@@ -111,7 +110,6 @@ where tu.USER_LOGIN = eUserLog
 );
 END//
 DELIMITER ;
-
 
 -- Дамп структуры для функция teljournal.fisExistsUserLogin
 DELIMITER //
@@ -131,7 +129,6 @@ where u.USER_LOGIN = eLogin
 end//
 DELIMITER ;
 
-
 -- Дамп структуры для функция teljournal.fisExistsUserMail
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `fisExistsUserMail`(
@@ -150,7 +147,6 @@ where u.USER_MAIL = eMail
 end//
 DELIMITER ;
 
-
 -- Дамп структуры для функция teljournal.fisUIDExists
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `fisUIDExists`(`eUID` VARCHAR(50)) RETURNS int(11)
@@ -163,7 +159,6 @@ where sd.UID = eUID
 );
 END//
 DELIMITER ;
-
 
 -- Дамп структуры для функция teljournal.getUserWebServerUrl
 DELIMITER //
@@ -193,7 +188,6 @@ end if;
 return iUserWebServerUrl;
 END//
 DELIMITER ;
-
 
 -- Дамп структуры для процедура teljournal.pAddNewUID
 DELIMITER //
@@ -229,7 +223,6 @@ where SOLD_DEVICE_ID = i_sold_device_id;
 
 END//
 DELIMITER ;
-
 
 -- Дамп структуры для таблица teljournal.sold_devices
 CREATE TABLE IF NOT EXISTS `sold_devices` (
@@ -278,7 +271,6 @@ INSERT INTO `sold_devices` (`SOLD_DEVICE_ID`, `UID`, `DATE_FROM`, `DEVICE_STATUS
 	(23, 'SEN-V6L6LHNCNLJQ', '2018-03-13 21:42:01', 23, 'OUTSIDE', NULL, NULL);
 /*!40000 ALTER TABLE `sold_devices` ENABLE KEYS */;
 
-
 -- Дамп структуры для таблица teljournal.status
 CREATE TABLE IF NOT EXISTS `status` (
   `STATUS_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -295,7 +287,6 @@ INSERT INTO `status` (`STATUS_ID`, `STATUS_CODE`, `STATUS_NAME`) VALUES
 	(2, 'AWAINTING', 'Ожидает подключения'),
 	(3, 'CONNECTED', 'Подключено');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
-
 
 -- Дамп структуры для таблица teljournal.tj_users
 CREATE TABLE IF NOT EXISTS `tj_users` (
@@ -320,7 +311,6 @@ INSERT INTO `tj_users` (`USER_ID`, `USER_LOGIN`, `USER_PASSWORD`, `USER_MAIL`, `
 	(2, 'Oleg', '2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3', 'antipovoa@gmail.com', '89164646464', 1),
 	(7, 'kalistrat', 'bf2c2edb653709e2213f47eb8ec36b1c051f1eb41a3b727af60c73be9ff7b5a3', 'kauredinas@mail.ru', '753753', 1);
 /*!40000 ALTER TABLE `tj_users` ENABLE KEYS */;
-
 
 -- Дамп структуры для процедура teljournal.updateSoldDeviceStatus
 DELIMITER //
@@ -365,7 +355,6 @@ where SOLD_DEVICE_ID = i_sold_device_id;
 END//
 DELIMITER ;
 
-
 -- Дамп структуры для таблица teljournal.user_web_servers
 CREATE TABLE IF NOT EXISTS `user_web_servers` (
   `SERVER_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -381,6 +370,7 @@ DELETE FROM `user_web_servers`;
 INSERT INTO `user_web_servers` (`SERVER_ID`, `PERSONAL_WEB_URL`, `WEB_SERVICE_URL`, `COUNT_USERS`) VALUES
 	(1, 'http://localhost:8777/personal', 'http://localhost:8777/userWs/Integration?wsdl', 4);
 /*!40000 ALTER TABLE `user_web_servers` ENABLE KEYS */;
+
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
