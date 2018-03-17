@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb44adc8-b759-4f7e-9775-efa68dd97484" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/things_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/things_war_exploded.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vaadin/tRegistrationWindow.java" afterPath="$PROJECT_DIR$/src/main/java/com/vaadin/tRegistrationWindow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/VAADIN/themes/mytheme/styles.css" afterPath="$PROJECT_DIR$/src/main/webapp/VAADIN/themes/mytheme/styles.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/things.iml" afterPath="$PROJECT_DIR$/things.iml" />
     </list>
     <ignored path="things.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,63 +31,19 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="180" column="5" selection-start-line="180" selection-start-column="5" selection-end-line="180" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="uidGeneratorLayout.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/vaadin/uidGeneratorTabContent/uidGeneratorLayout.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="113" column="0" selection-start-line="113" selection-start-column="0" selection-end-line="137" selection-end-column="5" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <marker date="1520962691657" expanded="true" signature="4361:5009" placeholder="select @num1... " />
+                <marker date="1520962691657" expanded="true" signature="5118:5811" placeholder="select @num1... " />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tUsefulFuctions.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/vaadin/tUsefulFuctions.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="51" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <marker date="1520962691650" expanded="true" signature="8066:9019" placeholder="select ud.de... user_device" />
-                <marker date="1520962691650" expanded="true" signature="14105:14169" placeholder="select s.ser... mqtt_servers" />
-                <marker date="1520962691650" expanded="true" signature="18270:18338" placeholder="select tz.ti... timezones" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tRegistrationWindow.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="tRegistrationWindow.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/vaadin/tRegistrationWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="2.3915255">
               <caret line="443" column="0" selection-start-line="443" selection-start-column="0" selection-end-line="443" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tRegistrationFormLayout.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/vaadin/tRegistrationFormLayout.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="567" column="50" selection-start-line="567" selection-start-column="50" selection-end-line="567" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tAddUserAccountWindow.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/vaadin/tAddUserAccountWindow.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5338983">
-              <caret line="72" column="22" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -297,6 +248,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -397,11 +349,10 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../userWebService" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -1095,11 +1046,13 @@
       <workItem from="1520876007900" duration="8716000" />
       <workItem from="1520926225357" duration="14487000" />
       <workItem from="1520966406954" duration="6813000" />
+      <workItem from="1521299142356" duration="247000" />
+      <workItem from="1521312509958" duration="114000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1223677000" />
+    <option name="totallyTimeSpent" value="1224038000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1111,7 +1064,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1296" height="1000" extended-state="6" />
+    <frame x="-8" y="-8" width="1296" height="1000" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1328,7 +1281,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.59921414">
           <caret line="39" column="5" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1343,9 +1295,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1353,7 +1302,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="17" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1361,7 +1309,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="186" column="0" selection-start-line="186" selection-start-column="0" selection-end-line="188" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1369,7 +1316,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="114" selection-end-column="54" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1377,9 +1323,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="59" column="60" selection-start-line="59" selection-start-column="60" selection-end-line="59" selection-end-column="60" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1416,7 +1359,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.981378">
           <caret line="44" column="11" selection-start-line="44" selection-start-column="11" selection-end-line="44" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1424,7 +1366,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="99" column="32" selection-start-line="99" selection-start-column="32" selection-end-line="99" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1432,7 +1373,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.22160149">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1440,7 +1380,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.424581">
           <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1448,7 +1387,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6014898">
           <caret line="156" column="56" selection-start-line="156" selection-start-column="56" selection-end-line="156" selection-end-column="109" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1463,27 +1401,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.14049587">
           <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/vaadin/uidGeneratorTabContent/uidSearchJournalLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="180" column="5" selection-start-line="180" selection-start-column="5" selection-end-line="180" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/vaadin/uidGeneratorTabContent/uidGeneratorLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="113" column="0" selection-start-line="113" selection-start-column="0" selection-end-line="137" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1499,7 +1416,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="12.361017">
           <caret line="442" column="0" selection-start-line="442" selection-start-column="0" selection-end-line="447" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1515,21 +1431,26 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.54745764">
           <caret line="47" column="24" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/vaadin/tRegistrationWindow.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vaadin/tAddUserAccountWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="443" column="0" selection-start-line="443" selection-start-column="0" selection-end-line="443" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.88876015">
+          <caret line="72" column="22" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vaadin/tRegistrationFormLayout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5863268">
+          <caret line="567" column="50" selection-start-line="567" selection-start-column="50" selection-end-line="567" selection-end-column="50" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/vaadin/tUsefulFuctions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.019698726">
           <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="51" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1540,18 +1461,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/vaadin/tRegistrationFormLayout.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vaadin/uidGeneratorTabContent/uidGeneratorLayout.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="567" column="50" selection-start-line="567" selection-start-column="50" selection-end-line="567" selection-end-column="50" />
-          <folding />
+        <state vertical-scroll-proportion="0.019698726">
+          <caret line="113" column="0" selection-start-line="113" selection-start-column="0" selection-end-line="137" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/vaadin/tAddUserAccountWindow.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vaadin/uidGeneratorTabContent/uidSearchJournalLayout.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5338983">
-          <caret line="72" column="22" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="180" column="5" selection-start-line="180" selection-start-column="5" selection-end-line="180" selection-end-column="5" />
+          <folding>
+            <marker date="1520962691657" expanded="true" signature="4361:5009" placeholder="select @num1... " />
+            <marker date="1520962691657" expanded="true" signature="5118:5811" placeholder="select @num1... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vaadin/tRegistrationWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.3915255">
+          <caret line="443" column="0" selection-start-line="443" selection-start-column="0" selection-end-line="443" selection-end-column="0" />
           <folding />
         </state>
       </provider>
