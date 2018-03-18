@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `device_status` (
   CONSTRAINT `FK_device_status_status` FOREIGN KEY (`STATUS_ID`) REFERENCES `status` (`STATUS_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы teljournal.device_status: ~71 rows (приблизительно)
+-- Дамп данных таблицы teljournal.device_status: ~75 rows (приблизительно)
 DELETE FROM `device_status`;
 /*!40000 ALTER TABLE `device_status` DISABLE KEYS */;
 INSERT INTO `device_status` (`DEVICE_STATUS_ID`, `STATUS_DATE`, `SOLD_DEVICE_ID`, `STATUS_ID`) VALUES
@@ -404,7 +404,7 @@ CREATE TABLE IF NOT EXISTS `tj_users` (
   CONSTRAINT `FK_tj_users_user_web_servers` FOREIGN KEY (`SERVER_ID`) REFERENCES `user_web_servers` (`SERVER_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='Общий справочник пользователей';
 
--- Дамп данных таблицы teljournal.tj_users: ~3 rows (приблизительно)
+-- Дамп данных таблицы teljournal.tj_users: ~4 rows (приблизительно)
 DELETE FROM `tj_users`;
 /*!40000 ALTER TABLE `tj_users` DISABLE KEYS */;
 INSERT INTO `tj_users` (`USER_ID`, `USER_LOGIN`, `USER_PASSWORD`, `USER_MAIL`, `USER_PHONE`, `SERVER_ID`) VALUES
