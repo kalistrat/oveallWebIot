@@ -1,12 +1,13 @@
 -- --------------------------------------------------------
 -- Хост:                         127.0.0.1
 -- Версия сервера:               5.5.23 - MySQL Community Server (GPL)
--- ОС Сервера:                   Win32
--- HeidiSQL Версия:              9.3.0.4984
+-- Операционная система:         Win64
+-- HeidiSQL Версия:              9.4.0.5125
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
@@ -21,9 +22,9 @@ CREATE TABLE IF NOT EXISTS `device_status` (
   KEY `FK_device_status_status` (`STATUS_ID`),
   CONSTRAINT `FK_DEVICE_STATUS_sold_devices` FOREIGN KEY (`SOLD_DEVICE_ID`) REFERENCES `sold_devices` (`SOLD_DEVICE_ID`),
   CONSTRAINT `FK_device_status_status` FOREIGN KEY (`STATUS_ID`) REFERENCES `status` (`STATUS_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы teljournal.device_status: ~76 rows (приблизительно)
+-- Дамп данных таблицы teljournal.device_status: ~92 rows (приблизительно)
 DELETE FROM `device_status`;
 /*!40000 ALTER TABLE `device_status` DISABLE KEYS */;
 INSERT INTO `device_status` (`DEVICE_STATUS_ID`, `STATUS_DATE`, `SOLD_DEVICE_ID`, `STATUS_ID`) VALUES
@@ -102,9 +103,24 @@ INSERT INTO `device_status` (`DEVICE_STATUS_ID`, `STATUS_DATE`, `SOLD_DEVICE_ID`
 	(74, '2018-03-17 21:55:57', 10, 3),
 	(75, '2018-03-17 21:56:23', 5, 2),
 	(76, '2018-03-17 21:56:42', 5, 3),
-	(77, '2018-03-19 18:23:41', 24, 1);
+	(77, '2018-03-19 18:23:41', 24, 1),
+	(78, '2018-03-19 21:26:39', 25, 1),
+	(79, '2018-03-19 21:26:45', 26, 1),
+	(80, '2018-03-19 21:26:46', 27, 1),
+	(81, '2018-03-19 21:26:49', 28, 1),
+	(82, '2018-03-19 21:26:50', 29, 1),
+	(83, '2018-03-19 21:26:55', 30, 1),
+	(84, '2018-03-19 21:26:56', 31, 1),
+	(85, '2018-03-19 21:28:26', 25, 2),
+	(86, '2018-03-19 21:29:05', 28, 2),
+	(87, '2018-03-19 21:30:06', 7, 2),
+	(88, '2018-03-19 21:31:57', 25, 3),
+	(89, '2018-03-19 21:32:53', 28, 3),
+	(90, '2018-03-19 21:33:41', 7, 3),
+	(91, '2018-03-19 21:34:35', 7, 1),
+	(92, '2018-03-19 21:35:17', 28, 1),
+	(93, '2018-03-19 21:36:05', 25, 1);
 /*!40000 ALTER TABLE `device_status` ENABLE KEYS */;
-
 
 -- Дамп структуры для функция teljournal.faddNewUser
 DELIMITER //
@@ -155,7 +171,6 @@ return i_ws_url;
 END//
 DELIMITER ;
 
-
 -- Дамп структуры для функция teljournal.fGetUserPassSha
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `fGetUserPassSha`(`eUserLog` VARCHAR(50)) RETURNS varchar(150) CHARSET utf8
@@ -167,7 +182,6 @@ where tu.USER_LOGIN = eUserLog
 );
 END//
 DELIMITER ;
-
 
 -- Дамп структуры для функция teljournal.fisExistsUserLogin
 DELIMITER //
@@ -187,7 +201,6 @@ where u.USER_LOGIN = eLogin
 end//
 DELIMITER ;
 
-
 -- Дамп структуры для функция teljournal.fisExistsUserMail
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `fisExistsUserMail`(
@@ -206,7 +219,6 @@ where u.USER_MAIL = eMail
 end//
 DELIMITER ;
 
-
 -- Дамп структуры для функция teljournal.fisUIDExists
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `fisUIDExists`(`eUID` VARCHAR(50)) RETURNS int(11)
@@ -218,7 +230,6 @@ where sd.UID = eUID
 );
 END//
 DELIMITER ;
-
 
 -- Дамп структуры для процедура teljournal.getDeviceArgs
 DELIMITER //
@@ -247,7 +258,6 @@ where sd.UID = eUID;
  
 END//
 DELIMITER ;
-
 
 -- Дамп структуры для функция teljournal.getUIDStatus
 DELIMITER //
@@ -280,7 +290,6 @@ return i_status_code;
 END//
 DELIMITER ;
 
-
 -- Дамп структуры для функция teljournal.getUserWebServerUrl
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `getUserWebServerUrl`(
@@ -309,7 +318,6 @@ end if;
 return iUserWebServerUrl;
 END//
 DELIMITER ;
-
 
 -- Дамп структуры для процедура teljournal.pAddNewUID
 DELIMITER //
@@ -346,7 +354,6 @@ where SOLD_DEVICE_ID = i_sold_device_id;
 END//
 DELIMITER ;
 
-
 -- Дамп структуры для процедура teljournal.rollBackAddNewUser
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` PROCEDURE `rollBackAddNewUser`(IN `eUserLog` VARCHAR(50))
@@ -356,6 +363,16 @@ where USER_LOGIN = eUserLog;
 END//
 DELIMITER ;
 
+-- Дамп структуры для процедура teljournal.setUserEnvironment
+DELIMITER //
+CREATE DEFINER=`kalistrat`@`localhost` PROCEDURE `setUserEnvironment`()
+BEGIN
+update user_web_servers uws
+set uws.PERSONAL_WEB_URL = 'http://snslog.ru/personal'
+,uws.WEB_SERVICE_URL = 'http://snslog.ru/userWs/Integration?wsdl'
+where uws.SERVER_ID = 1;
+END//
+DELIMITER ;
 
 -- Дамп структуры для таблица teljournal.sold_devices
 CREATE TABLE IF NOT EXISTS `sold_devices` (
@@ -374,9 +391,9 @@ CREATE TABLE IF NOT EXISTS `sold_devices` (
   CONSTRAINT `FK_sold_devices_device_status` FOREIGN KEY (`DEVICE_STATUS_ID`) REFERENCES `device_status` (`DEVICE_STATUS_ID`),
   CONSTRAINT `FK_sold_devices_tj_users` FOREIGN KEY (`USER_ID`) REFERENCES `tj_users` (`USER_ID`),
   CONSTRAINT `FK_sold_devices_user_web_servers` FOREIGN KEY (`SERVER_ID`) REFERENCES `user_web_servers` (`SERVER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='Проданные устройства';
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='Проданные устройства';
 
--- Дамп данных таблицы teljournal.sold_devices: ~23 rows (приблизительно)
+-- Дамп данных таблицы teljournal.sold_devices: ~30 rows (приблизительно)
 DELETE FROM `sold_devices`;
 /*!40000 ALTER TABLE `sold_devices` DISABLE KEYS */;
 INSERT INTO `sold_devices` (`SOLD_DEVICE_ID`, `UID`, `DATE_FROM`, `DEVICE_STATUS_ID`, `CURRENT_STATUS_CODE`, `USER_ID`, `SERVER_ID`) VALUES
@@ -385,7 +402,7 @@ INSERT INTO `sold_devices` (`SOLD_DEVICE_ID`, `UID`, `DATE_FROM`, `DEVICE_STATUS
 	(3, 'RET-QWERTYQWERTY', '2018-03-13 13:55:38', 3, 'OUTSIDE', NULL, NULL),
 	(5, 'SEN-I80827SF2CE7', '2018-03-13 14:44:11', 76, 'CONNECTED', 9, 1),
 	(6, 'SEN-K4HUIIYW8RNG', '2018-03-13 14:44:33', 66, 'CONNECTED', 1, 1),
-	(7, 'SEN-ZSOR9JD88JIF', '2018-03-13 14:44:36', 7, 'OUTSIDE', NULL, NULL),
+	(7, 'SEN-ZSOR9JD88JIF', '2018-03-13 14:44:36', 91, 'OUTSIDE', NULL, NULL),
 	(8, 'BRI-II497O5YNUFA', '2018-03-13 14:44:41', 68, 'CONNECTED', 7, 1),
 	(9, 'RET-41IC5IBP5F2U', '2018-03-13 14:44:47', 70, 'CONNECTED', 7, 1),
 	(10, 'BRI-XGSA4ZYQTDYQ', '2018-03-13 14:44:50', 74, 'CONNECTED', 9, 1),
@@ -402,9 +419,15 @@ INSERT INTO `sold_devices` (`SOLD_DEVICE_ID`, `UID`, `DATE_FROM`, `DEVICE_STATUS
 	(21, 'SEN-9TIV4KE7R1XW', '2018-03-13 15:14:18', 21, 'OUTSIDE', NULL, NULL),
 	(22, 'SEN-0VR7E2V90Z19', '2018-03-13 15:14:19', 22, 'OUTSIDE', NULL, NULL),
 	(23, 'SEN-V6L6LHNCNLJQ', '2018-03-13 21:42:01', 42, 'OUTSIDE', NULL, NULL),
-	(24, 'SEN-UVLD7YITSN1Z', '2018-03-19 18:23:41', 77, 'OUTSIDE', NULL, NULL);
+	(24, 'SEN-UVLD7YITSN1Z', '2018-03-19 18:23:41', 77, 'OUTSIDE', NULL, NULL),
+	(25, 'BRI-DLOIN9335OHU', '2018-03-19 21:26:39', 93, 'OUTSIDE', NULL, NULL),
+	(26, 'BRI-YFO20T2J6HHC', '2018-03-19 21:26:45', 79, 'OUTSIDE', NULL, NULL),
+	(27, 'BRI-FMLD7DHZG2VG', '2018-03-19 21:26:46', 80, 'OUTSIDE', NULL, NULL),
+	(28, 'RET-FCD05T177PCI', '2018-03-19 21:26:49', 92, 'OUTSIDE', NULL, NULL),
+	(29, 'RET-M0RF8CMK8A28', '2018-03-19 21:26:50', 82, 'OUTSIDE', NULL, NULL),
+	(30, 'SEN-CS3VEK79WZFD', '2018-03-19 21:26:54', 83, 'OUTSIDE', NULL, NULL),
+	(31, 'SEN-1CBMEYOL5XZ4', '2018-03-19 21:26:56', 84, 'OUTSIDE', NULL, NULL);
 /*!40000 ALTER TABLE `sold_devices` ENABLE KEYS */;
-
 
 -- Дамп структуры для таблица teljournal.status
 CREATE TABLE IF NOT EXISTS `status` (
@@ -423,7 +446,6 @@ INSERT INTO `status` (`STATUS_ID`, `STATUS_CODE`, `STATUS_NAME`) VALUES
 	(3, 'CONNECTED', 'Подключено');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 
-
 -- Дамп структуры для таблица teljournal.tj_users
 CREATE TABLE IF NOT EXISTS `tj_users` (
   `USER_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -437,18 +459,18 @@ CREATE TABLE IF NOT EXISTS `tj_users` (
   UNIQUE KEY `USER_MAIL` (`USER_MAIL`),
   KEY `FK_tj_users_user_web_servers` (`SERVER_ID`),
   CONSTRAINT `FK_tj_users_user_web_servers` FOREIGN KEY (`SERVER_ID`) REFERENCES `user_web_servers` (`SERVER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='Общий справочник пользователей';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='Общий справочник пользователей';
 
--- Дамп данных таблицы teljournal.tj_users: ~4 rows (приблизительно)
+-- Дамп данных таблицы teljournal.tj_users: ~5 rows (приблизительно)
 DELETE FROM `tj_users`;
 /*!40000 ALTER TABLE `tj_users` DISABLE KEYS */;
 INSERT INTO `tj_users` (`USER_ID`, `USER_LOGIN`, `USER_PASSWORD`, `USER_MAIL`, `USER_PHONE`, `SERVER_ID`) VALUES
 	(1, 'k', '7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451', 'kalique@bk.ru', '89162664924', 1),
 	(2, 'Oleg', '2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3', 'antipovoa@gmail.com', '89164646464', 1),
 	(7, 'kalistrat', 'bf2c2edb653709e2213f47eb8ec36b1c051f1eb41a3b727af60c73be9ff7b5a3', 'kauredinas@mail.ru', '753753', 1),
-	(9, 'semenovna', '4c4de41965012a94d6fcca5abbb792139e5f88f9149af99571be04d6b1afdcee', 'n7.semenov@gmail.com', '159951', 1);
+	(9, 'semenovna', '4c4de41965012a94d6fcca5abbb792139e5f88f9149af99571be04d6b1afdcee', 'n7.semenov@gmail.com', '159951', 1),
+	(11, 'akmakmakm', '6fee22b68be57b28b3d49a85ec2d979edfb1cbdd2c6a9d440dfe65f25c495fea', 'akminfo11@mail.ru', '159951159', 1);
 /*!40000 ALTER TABLE `tj_users` ENABLE KEYS */;
-
 
 -- Дамп структуры для процедура teljournal.updateSoldDeviceStatus
 DELIMITER //
@@ -518,7 +540,6 @@ end if;
 END//
 DELIMITER ;
 
-
 -- Дамп структуры для таблица teljournal.user_web_servers
 CREATE TABLE IF NOT EXISTS `user_web_servers` (
   `SERVER_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -532,8 +553,9 @@ CREATE TABLE IF NOT EXISTS `user_web_servers` (
 DELETE FROM `user_web_servers`;
 /*!40000 ALTER TABLE `user_web_servers` DISABLE KEYS */;
 INSERT INTO `user_web_servers` (`SERVER_ID`, `PERSONAL_WEB_URL`, `WEB_SERVICE_URL`, `COUNT_USERS`) VALUES
-	(1, 'http://localhost:8080/personal', 'http://localhost:8182/userLinkWebService/Integration?wsdl', 5);
+	(1, 'http://localhost:8080/personal', 'http://localhost:8080/userWs/Integration?wsdl', 6);
 /*!40000 ALTER TABLE `user_web_servers` ENABLE KEYS */;
+
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
