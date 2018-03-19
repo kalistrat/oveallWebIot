@@ -26,6 +26,13 @@ public class tGuestView extends CustomComponent implements View {
 
     public tGuestView(){
 
+        ThemeResource resource = new ThemeResource("TJAY.png");
+
+        Image logotype = new Image(null,resource);
+        logotype.setSizeUndefined();
+        logotype.setWidth("907px");
+        logotype.setHeight("100px");
+
         regWindowButton = new Button("Регистрация");
         regWindowButton.setIcon(FontAwesome.USER_PLUS);
         regWindowButton.addStyleName(ValoTheme.BUTTON_LINK);
@@ -63,14 +70,14 @@ public class tGuestView extends CustomComponent implements View {
         topButtonLayout.setComponentAlignment(topLeftButtonLayout,Alignment.TOP_LEFT);
         topButtonLayout.setComponentAlignment(topRightButtonLayout,Alignment.TOP_RIGHT);
         topButtonLayout.setWidth("100%");
-        topButtonLayout.setHeight("100px");
+        topButtonLayout.setHeightUndefined();
 
         uidGeneratorTabContent genLayout = new uidGeneratorTabContent();
         VerticalLayout genTabCont = new VerticalLayout(
                 new Label()
                 ,genLayout
         );
-        genTabCont.setSizeFull();
+        genTabCont.setSizeUndefined();
         genTabCont.setComponentAlignment(genLayout,Alignment.MIDDLE_CENTER);
 
 
@@ -84,8 +91,16 @@ public class tGuestView extends CustomComponent implements View {
         overallWebSiteSheet.setWidth("100%");
         overallWebSiteSheet.setHeightUndefined();
 
+        VerticalLayout logoLayout = new VerticalLayout(
+          logotype
+        );
+        logoLayout.setComponentAlignment(logotype,Alignment.MIDDLE_CENTER);
+        logoLayout.setHeightUndefined();
+        logoLayout.setWidth("100%");
+
         VerticalLayout contentLayout = new VerticalLayout();
         contentLayout.addComponent(topButtonLayout);
+        contentLayout.addComponent(logoLayout);
         contentLayout.addComponent(overallWebSiteSheet);
 
         setCompositionRoot(contentLayout);

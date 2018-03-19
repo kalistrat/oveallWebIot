@@ -1,6 +1,5 @@
 package com.vaadin;
 
-import com.vaadin.data.Item;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -15,7 +14,6 @@ import org.w3c.dom.Document;
 
 import javax.xml.xpath.XPathFactory;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -102,11 +100,6 @@ public class tRegistrationWindow extends Window {
                 } else {
 
 
-                    Notification.show("Новый профиль добавлен!",
-                            null,
-                            Notification.Type.TRAY_NOTIFICATION);
-                    UI.getCurrent().removeWindow((tRegistrationWindow) clickEvent.getButton().getData());
-
                     String sUser = LoginField.getValue();
                     String sPass = PassWordField.getValue();
                     String sMail = MailTextField.getValue();
@@ -121,6 +114,27 @@ public class tRegistrationWindow extends Window {
                             ,sPhone
                             ,userWsUrl
                     );
+
+                    if (wsRes != null) {
+                        if (wsRes.equals("USER_WAS_ADDED")){
+                            Notification.show("Новый пользователь добавлен!",
+                                    null,
+                                    Notification.Type.TRAY_NOTIFICATION);
+                            UI.getCurrent().removeWindow((tRegistrationWindow) clickEvent.getButton().getData());
+                        } else {
+                            rollBackAddNewUser(sUser);
+                            Notification.show("Ошибка сохранения!",
+                                    "Проблема на стороне пользовательской базы данных",
+                                    Notification.Type.TRAY_NOTIFICATION);
+                            UI.getCurrent().removeWindow((tRegistrationWindow) clickEvent.getButton().getData());
+                        }
+                    } else {
+                        rollBackAddNewUser(sUser);
+                        Notification.show("Ошибка сохранения!",
+                                "Пользовательский веб-сервис недоступен",
+                                Notification.Type.TRAY_NOTIFICATION);
+                        UI.getCurrent().removeWindow((tRegistrationWindow) clickEvent.getButton().getData());
+                    }
 
                 }
 
@@ -394,6 +408,32 @@ public class tRegistrationWindow extends Window {
 
         }
         return urlUserWs;
+    }
+
+    private void rollBackAddNewUser(String iUserLog){
+
+        try {
+
+            Class.forName(com.vaadin.tUsefulFuctions.JDBC_DRIVER);
+            Connection Con = DriverManager.getConnection(
+                    com.vaadin.tUsefulFuctions.DB_URL
+                    , com.vaadin.tUsefulFuctions.USER
+                    , com.vaadin.tUsefulFuctions.PASS
+            );
+
+            CallableStatement Stmt = Con.prepareCall("{call rollBackAddNewUser(?)}");
+            Stmt.setString(1, iUserLog);
+            Stmt.execute();
+            Con.close();
+
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+
+        }catch(Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+       }
     }
 
     private String callUserWsToAddNewUser(
