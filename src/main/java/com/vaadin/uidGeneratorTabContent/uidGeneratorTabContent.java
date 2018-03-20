@@ -19,10 +19,10 @@ public class uidGeneratorTabContent extends VerticalLayout {
         this.addComponent(genLayout);
         this.addComponent(jouLayout);
         this.setSpacing(true);
-        this.addStyleName(ValoTheme.LAYOUT_CARD);
+        this.addStyleName(ValoTheme.LAYOUT_WELL);
         this.setMargin(true);
 
-        this.setWidth("800px");
+        this.setWidth("1000px");
         this.setHeightUndefined();
 
     }

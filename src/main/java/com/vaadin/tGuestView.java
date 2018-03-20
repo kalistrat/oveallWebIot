@@ -77,12 +77,32 @@ public class tGuestView extends CustomComponent implements View {
                 new Label()
                 ,genLayout
         );
-        genTabCont.setSizeUndefined();
+        genTabCont.setSizeFull();
         genTabCont.setComponentAlignment(genLayout,Alignment.MIDDLE_CENTER);
 
+        ThemeResource resource1 = new ThemeResource("FIRST_PAGE.png");
+
+        Image commonImage = new Image(null,resource1);
+        commonImage.setWidth("700px");
+        commonImage.setHeight("467px");
+
+        VerticalLayout commonImgLay = new VerticalLayout(
+                commonImage
+        );
+        commonImgLay.setWidth("1000px");
+        commonImgLay.setHeight("667px");
+        commonImgLay.setComponentAlignment(commonImage,Alignment.MIDDLE_CENTER);
+        commonImgLay.addStyleName(ValoTheme.LAYOUT_WELL);
+
+        VerticalLayout commonTabCont = new VerticalLayout(
+                new Label()
+                ,commonImgLay
+        );
+        commonTabCont.setSizeFull();
+        commonTabCont.setComponentAlignment(commonImgLay,Alignment.MIDDLE_CENTER);
 
         overallWebSiteSheet = new TabSheet();
-        overallWebSiteSheet.addTab(new Label("Общее"), "Общее", com.vaadin.icons.VaadinIcons.HOME);
+        overallWebSiteSheet.addTab(commonTabCont, "Общее", com.vaadin.icons.VaadinIcons.HOME);
         overallWebSiteSheet.addTab(new Label("Продукция"), "Продукция", com.vaadin.icons.VaadinIcons.FACTORY);
         overallWebSiteSheet.addTab(new Label("Подключение"), "Подключение", com.vaadin.icons.VaadinIcons.CONNECT);
         overallWebSiteSheet.addTab(new Label("Демо"), "Демо", com.vaadin.icons.VaadinIcons.CHART);
@@ -102,6 +122,7 @@ public class tGuestView extends CustomComponent implements View {
         contentLayout.addComponent(topButtonLayout);
         contentLayout.addComponent(logoLayout);
         contentLayout.addComponent(overallWebSiteSheet);
+        contentLayout.setComponentAlignment(overallWebSiteSheet,Alignment.MIDDLE_CENTER);
 
         setCompositionRoot(contentLayout);
     }
