@@ -11,8 +11,6 @@ import java.io.StringReader;
 import java.net.Socket;
 import java.security.MessageDigest;
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -60,50 +58,6 @@ public class tUsefulFuctions {
     }
 
 
-    public static List<tMark> GetMarksFromString(String MarksString,String AxeTitle){
-        List<tMark> MarksList = new ArrayList<tMark>();
-        //System.out.println("MarksString :" + MarksString);
-        List<String> MarksPairs = GetListFromString(MarksString,"/");
-        for (String sPair : MarksPairs){
-            int iPos = sPair.indexOf("#");
-            if (AxeTitle.equals("x")) {
-                tMark tPair = new tMark(Integer.parseInt(sPair.substring(iPos+1)),0,sPair.substring(0, iPos));
-                MarksList.add(tPair);
-            } else {
-                tMark tPair = new tMark(0,Integer.parseInt(sPair.substring(iPos+1)),sPair.substring(0, iPos));
-                MarksList.add(tPair);
-            }
-        }
-        return MarksList;
-    }
-
-    public static List<String> GetCaptionList(List<tIdCaption> eIdCaptionList){
-        List<String> iIdCaptionList = new ArrayList<String>();
-        for (tIdCaption iIdC : eIdCaptionList){
-            iIdCaptionList.add(iIdC.tCaption);
-        }
-        return iIdCaptionList;
-    }
-
-    public static Integer GetIdByCaption(List<tIdCaption> eIdCaptionList,String eCaption){
-        Integer iId = null;
-        for (tIdCaption iIdC : eIdCaptionList){
-            if (iIdC.tCaption.equals(eCaption)){
-                iId = iIdC.tId;
-            }
-        }
-
-        return iId;
-    }
-
-    public static Double GetDoubleFromString(String Val){
-        Double dVal = null;
-        if ((Val != null) || (!Val.equals(""))) {
-            dVal = Double.parseDouble(Val.replace(",", "."));
-        }
-        return dVal;
-    }
-
     public static Double ParseDouble(String strNumber) {
         if (strNumber != null && strNumber.length() > 0) {
             try {
@@ -113,101 +67,6 @@ public class tUsefulFuctions {
             }
         }
         else return null;
-    }
-
-
-    public static int fIsLeafNameBusy(String qUserLog,String qNewLeafName){
-        int IsBusy = 0;
-
-        try {
-
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
-            Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
-            );
-
-            CallableStatement LeafNameBusyStmt = Con.prepareCall("{? = call fIsLeafNameExists(?, ?)}");
-            LeafNameBusyStmt.registerOutParameter (1, Types.INTEGER);
-            LeafNameBusyStmt.setString(2, qUserLog);
-            LeafNameBusyStmt.setString(3, qNewLeafName);
-            LeafNameBusyStmt.execute();
-            IsBusy = LeafNameBusyStmt.getInt(1);
-            Con.close();
-
-        }catch(SQLException se){
-            //Handle errors for JDBC
-            se.printStackTrace();
-        }catch(Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        }
-
-        return IsBusy;
-    }
-
-    public static void deleteUserDevice(
-            String qUserLog
-            ,int qLeafId
-    ){
-        try {
-
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
-            Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
-            );
-
-            CallableStatement deleteDeviceStmt = Con.prepareCall("{call p_delete_user_device(?, ?)}");
-            deleteDeviceStmt.setString(1, qUserLog);
-            deleteDeviceStmt.setInt(2, qLeafId);
-            deleteDeviceStmt.execute();
-
-            Con.close();
-
-
-        }catch(SQLException se){
-            //Handle errors for JDBC
-            se.printStackTrace();
-
-        }catch(Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-
-        }
-
-    }
-
-    public static void deleteTreeLeaf(
-            String qUserLog
-            ,int qLeafId
-    ){
-        try {
-
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
-            Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
-            );
-
-            CallableStatement deleteLeafStmt = Con.prepareCall("{call p_delete_tree_leaf(?, ?)}");
-            deleteLeafStmt.setString(1, qUserLog);
-            deleteLeafStmt.setInt(2, qLeafId);
-            deleteLeafStmt.execute();
-
-            Con.close();
-
-        }catch(SQLException se){
-            //Handle errors for JDBC
-            se.printStackTrace();
-        }catch(Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        }
-
     }
 
     public static void refreshUserTree(
@@ -238,163 +97,6 @@ public class tUsefulFuctions {
 
     }
 
-    public static void getUserDetectorData(
-            int qUserDeviceId
-            ,tDetectorFormLayout qParamsForm
-            //,tDescriptionLayout qDescriptionForm
-            ,tDetectorUnitsLayout qUnitsForm
-    ){
-
-        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-
-
-        try {
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
-            Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
-            );
-
-            String DataSql = "select ud.device_user_name\n" +
-                    ",ud.user_device_measure_period\n" +
-                    ",ud.user_device_date_from\n" +
-                    ",ud.device_units\n" +
-                    ",ud.mqtt_topic_write\n" +
-                    ",ser.server_ip mqqtt\n" +
-                    ",ud.description\n" +
-                    ",concat(un.unit_name,concat(' : ',un.unit_symbol))\n" +
-                    ",uf.factor_value\n" +
-                    ",ifnull(ud.device_log,'') device_log\n" +
-                    ",ifnull(ud.device_pass,'') device_pass\n" +
-                    ",ud.measure_data_type\n" +
-                    "from user_device ud\n" +
-                    "left join mqtt_servers ser on ser.server_id = ud.mqqt_server_id\n" +
-                    "left join unit un on un.unit_id = ud.unit_id\n" +
-                    "left join unit_factor uf on uf.factor_id = ud.factor_id\n" +
-                    "where ud.user_device_id = ?";
-
-            PreparedStatement DetectorDataStmt = Con.prepareStatement(DataSql);
-            DetectorDataStmt.setInt(1,qUserDeviceId);
-
-            ResultSet DetectorDataRs = DetectorDataStmt.executeQuery();
-
-            while (DetectorDataRs.next()) {
-                qParamsForm.NameTextField.setValue(DetectorDataRs.getString(1));
-                qParamsForm.PeriodMeasureSelect.select(DetectorDataRs.getString(2));
-                if (DetectorDataRs.getTimestamp(3) != null) {
-                    qParamsForm.DetectorAddDate.setValue(df.format(new Date(DetectorDataRs.getTimestamp(3).getTime())));
-                } else {
-                    qParamsForm.DetectorAddDate.setValue("");
-                }
-                qUnitsForm.UnitTextField.setValue(DetectorDataRs.getString(4));
-                qParamsForm.InTopicNameField.setValue(DetectorDataRs.getString(5));
-                qUnitsForm.UnitSymbolSelect.select(DetectorDataRs.getString(8));
-                qUnitsForm.UnitFactorSelect.select(DetectorDataRs.getString(9));
-                qParamsForm.ArrivedDataTypeSelect.select(DetectorDataRs.getString(12));
-
-            }
-
-
-            Con.close();
-
-        } catch (SQLException se3) {
-            //Handle errors for JDBC
-            se3.printStackTrace();
-        } catch (Exception e13) {
-            //Handle errors for Class.forName
-            e13.printStackTrace();
-        }
-    }
-
-
-    public static void updateDeviceDescription(
-            int qUserDeviceId
-            ,String qDescValue
-    ){
-        try {
-
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
-            Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
-            );
-
-            CallableStatement Stmt = Con.prepareCall("{call p_device_description_update(?, ?)}");
-            Stmt.setInt(1, qUserDeviceId);
-            Stmt.setString(2, qDescValue);
-
-            Stmt.execute();
-
-            Con.close();
-
-        }catch(SQLException se){
-            //Handle errors for JDBC
-            se.printStackTrace();
-        }catch(Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        }
-
-    }
-
-    public static String sendMessAgeToSubcribeServer(
-            int qEntityId
-            ,String qUserLog
-            ,String qActionType
-            ,String MessAgeType
-    ){
-        try {
-
-            Socket s = new Socket("localhost", 3128);
-            String InMessageValue = qActionType + "/" + qUserLog + "/" + MessAgeType +"/" + String.valueOf(qEntityId) + "/";
-
-
-            s.getOutputStream().write(InMessageValue.getBytes());
-            // читаем ответ
-            byte buf[] = new byte[256 * 1024];
-            int r = s.getInputStream().read(buf);
-            String outSubscriberMessage = new String(buf, 0, r);
-            List<String> MessageAttr = GetListFromString(outSubscriberMessage,"|");
-            //System.out.println("Is operation Sussess :" + MessageAttr.get(0));
-            //System.out.println("Operation Message:" + MessageAttr.get(0));
-            s.close();
-
-            if (MessageAttr.get(0).equals("N")) {
-                return MessageAttr.get(1);
-            } else {
-                return "";
-            }
-
-        }
-        catch(IOException e) {
-            return "Ошибка подключения к серверу подписки";
-        }
-    }
-
-    public static boolean isSubscriberExists(){
-        try {
-
-            Socket s = new Socket("localhost", 3128);
-            s.getOutputStream().write("test".getBytes());
-            byte buf[] = new byte[256 * 1024];
-            int r = s.getInputStream().read(buf);
-            String outSubscriberMessage = new String(buf, 0, r);
-            s.close();
-//            System.out.println(outSubscriberMessage);
-
-            if (outSubscriberMessage != null) {
-                return true;
-            } else {
-                return false;
-            }
-
-        }
-        catch(IOException e) {
-            return false;
-        }
-    }
 
     public static String sha256(String base) {
         try{
@@ -411,39 +113,6 @@ public class tUsefulFuctions {
             return hexString.toString();
         } catch(Exception ex){
             throw new RuntimeException(ex);
-        }
-    }
-
-    public static void getMqttServerData(NativeSelect qMqttServerSelect){
-
-        try {
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
-            Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
-            );
-
-            String DataSql = "select s.server_ip\n" +
-                    "from mqtt_servers s";
-
-            PreparedStatement MqttDataStmt = Con.prepareStatement(DataSql);
-
-            ResultSet MqttDataRs = MqttDataStmt.executeQuery();
-
-            while (MqttDataRs.next()) {
-                qMqttServerSelect.addItem(MqttDataRs.getString(1));
-            }
-
-
-            Con.close();
-
-        } catch (SQLException se3) {
-            //Handle errors for JDBC
-            se3.printStackTrace();
-        } catch (Exception e13) {
-            //Handle errors for Class.forName
-            e13.printStackTrace();
         }
     }
 
@@ -484,39 +153,6 @@ public class tUsefulFuctions {
         }
     }
 
-    public static void updateActuatorLoginPassWord(
-            int qUserDeviceId
-            ,String qDeviceLog
-            ,String qDevicePass
-    ){
-        try {
-
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
-            Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
-            );
-
-            CallableStatement Stmt = Con.prepareCall("{call p_device_login_update(?, ?, ?)}");
-            Stmt.setInt(1, qUserDeviceId);
-            Stmt.setString(2, qDeviceLog);
-            Stmt.setString(3, qDevicePass);
-
-            Stmt.execute();
-
-            Con.close();
-
-        }catch(SQLException se){
-            //Handle errors for JDBC
-            se.printStackTrace();
-        }catch(Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        }
-
-    }
-
     public static int genRandInt(int mii,int mai){
         Random rnd = new Random(System.currentTimeMillis());
         int number = mii + rnd.nextInt(mai - mii + 1);
@@ -540,7 +176,6 @@ public class tUsefulFuctions {
         }
 
     }
-
 
     public static Integer calculateAge(Date birthday)
     {
@@ -680,39 +315,6 @@ public class tUsefulFuctions {
             e.printStackTrace();
         }
         return isE;
-    }
-
-    public static String getDataBaseXMLString(
-            String storedFunctionCall
-            ,int storedVariable
-    ){
-        try {
-
-            Class.forName(JDBC_DRIVER);
-            Connection Con = DriverManager.getConnection(
-                    DB_URL
-                    , USER
-                    , PASS
-            );
-
-            CallableStatement Stmt = Con.prepareCall("{? = call " + storedFunctionCall + "(?)}");
-            Stmt.registerOutParameter(1, Types.BLOB);
-            Stmt.setInt(2,storedVariable);
-            Stmt.execute();
-            Blob CondValue = Stmt.getBlob(1);
-            String resultStr = new String(CondValue.getBytes(1l, (int) CondValue.length()));
-            Con.close();
-            return resultStr;
-
-        }catch(SQLException se){
-            //Handle errors for JDBC
-            se.printStackTrace();
-            return null;
-        }catch(Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-            return null;
-        }
     }
 
 

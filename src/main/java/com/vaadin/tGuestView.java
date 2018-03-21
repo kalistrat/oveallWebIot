@@ -5,11 +5,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.*;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-import com.vaadin.uidGeneratorTabContent.uidGeneratorTabContent;
-import org.vaadin.teemu.VaadinIcons;
-
-import java.io.File;
-import java.sql.*;
+import com.vaadin.uidGeneratorContent.uidGeneratorTabContent;
 
 /**
  * Created by SemenovNA on 02.08.2016.

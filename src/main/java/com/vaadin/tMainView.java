@@ -1,6 +1,8 @@
 package com.vaadin;
 
 
+import com.vaadin.demoContent.tTree;
+import com.vaadin.demoContent.tTreeContentLayout;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -73,16 +75,16 @@ public class tMainView extends CustomComponent implements View {
 //        DeviceForm.setMargin(true);
 //        DeviceForm.addComponent(new tDeviceLayout());
 
-        tTree DeviceTree = new tTree(this.CurrentUsr,this);
-        DeviceTree.addStyleName("CaptionTree");
+        //tTree DeviceTree = new tTree(this.CurrentUsr,this);
+        //DeviceTree.addStyleName("CaptionTree");
 
-        DeviceTree.setSizeFull();
+        //DeviceTree.setSizeFull();
         //DeviceForm.addStyleName(ValoTheme.LAYOUT_CARD);
         //DeviceTree.addStyleName(ValoTheme.LAYOUT_CARD);
 
-        MidSec.addComponent(DeviceTree);
+        //MidSec.addComponent(DeviceTree);
 
-        this.TreeContentUsr = new tTreeContentLayout(CurrentUsr,DeviceTree);
+        //this.TreeContentUsr = new tTreeContentLayout(CurrentUsr,DeviceTree);
         MidSec.addComponent(this.TreeContentUsr);
 
         //MidSec.setHeight("1000px");
@@ -111,7 +113,7 @@ public class tMainView extends CustomComponent implements View {
         VerticalLayout Tab3Cont = new VerticalLayout();
         Tab3Cont.setMargin(true);
         Tab2Cont.setSizeFull();
-        //tDiagramLayout testDiagram = new tDiagramLayout();
+        //DiagramLayout testDiagram = new DiagramLayout();
         Tab3Cont.addComponent(new Label("123123"));
         //Tab3Cont.setComponentAlignment(testDiagram,Alignment.MIDDLE_CENTER);
 

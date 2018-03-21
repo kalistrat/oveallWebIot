@@ -23,41 +23,33 @@ public class MyUI extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
-        new Navigator(this, this);
-        getNavigator().addView(tGuestView.NAME, tGuestView.class);//
-        getNavigator().addView(tMainView.NAME,tMainView.class);
-        getNavigator().addView(tRegistrationVeiw.NAME,tRegistrationVeiw.class);
+        //new Navigator(this, this);
+        //getNavigator().addView(tGuestView.NAME, tGuestView.class);//
+        //getNavigator().addView(tMainView.NAME,tMainView.class);
 
-
-        getNavigator().addViewChangeListener(new ViewChangeListener() {
-
-            @Override
-            public boolean beforeViewChange(ViewChangeEvent event) {
-
-                boolean isLoggedIn = getSession().getAttribute("user") != null;
-                boolean isGuestView = event.getNewView() instanceof tGuestView;
-                boolean isRegistrationView = event.getNewView() instanceof tRegistrationVeiw;
-
-                if (isRegistrationView) {
-                return true;
-                } else {
-
-                    if (!isLoggedIn && !isGuestView) {
-                        getNavigator().navigateTo(tGuestView.NAME);
-                        return false;
-                    } else if (isLoggedIn && isGuestView) {
-                        return false;
-                    }
-
-                }
-                return true;
-            }
-
-            @Override
-            public void afterViewChange(ViewChangeEvent event) {
-
-            }
-        });
+//        getNavigator().addViewChangeListener(new ViewChangeListener() {
+//
+//            @Override
+//            public boolean beforeViewChange(ViewChangeEvent event) {
+//
+//                boolean isLoggedIn = getSession().getAttribute("user") != null;
+//                boolean isGuestView = event.getNewView() instanceof tGuestView;
+//
+//                    if (!isLoggedIn && !isGuestView) {
+//                        getNavigator().navigateTo(tGuestView.NAME);
+//                        return false;
+//                    } else if (isLoggedIn && isGuestView) {
+//                        return false;
+//                    }
+//
+//                return true;
+//            }
+//
+//            @Override
+//            public void afterViewChange(ViewChangeEvent event) {
+//
+//            }
+//        });
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
