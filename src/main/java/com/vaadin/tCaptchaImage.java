@@ -2,8 +2,6 @@ package com.vaadin;
 
 
 import com.vaadin.server.StreamResource;
-import org.vaadin.hezamu.canvas.*;
-import org.vaadin.hezamu.canvas.Canvas;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,7 +10,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Random;
 
 /**
  * Created by kalistrat on 15.06.2017.
@@ -41,9 +38,9 @@ public class tCaptchaImage implements StreamResource.StreamSource {
         drawable.setColor(Color.RED);
         drawable.setFont(new Font("Montserrat",Font.PLAIN, 20));
 
-        int ca = tUsefulFuctions.genRandInt(1,9);
-        int cb = tUsefulFuctions.genRandInt(1,9);
-        String csign = tUsefulFuctions.genSign();
+        int ca = commonFuctions.genRandInt(1,9);
+        int cb = commonFuctions.genRandInt(1,9);
+        String csign = commonFuctions.genSign();
 
         if (csign.equals("+")) {
             captchaRes = ca + cb;

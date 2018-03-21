@@ -3,7 +3,7 @@ package com.vaadin.demoContent.detectorContent;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.tUsefulFuctions;
+import com.vaadin.commonFuctions;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -108,11 +108,11 @@ public class tDetectorUnitsLayout extends VerticalLayout {
     public void getUnitsData(){
 
         try {
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
+            Class.forName(commonFuctions.JDBC_DRIVER);
             Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
+                    commonFuctions.DB_URL
+                    , commonFuctions.USER
+                    , commonFuctions.PASS
             );
 
             String DataSql = "select concat(u.unit_name,concat(' : ',u.unit_symbol))\n" +
@@ -142,11 +142,11 @@ public class tDetectorUnitsLayout extends VerticalLayout {
     public void getFactorData(){
 
         try {
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
+            Class.forName(commonFuctions.JDBC_DRIVER);
             Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
+                    commonFuctions.DB_URL
+                    , commonFuctions.USER
+                    , commonFuctions.PASS
             );
 
             String DataSql = "select uf.factor_value\n" +
@@ -179,11 +179,11 @@ public class tDetectorUnitsLayout extends VerticalLayout {
     ){
         try {
 
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
+            Class.forName(commonFuctions.JDBC_DRIVER);
             Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
+                    commonFuctions.DB_URL
+                    , commonFuctions.USER
+                    , commonFuctions.PASS
             );
 
             CallableStatement Stmt = Con.prepareCall("{call p_detector_units_update(?, ?, ?)}");

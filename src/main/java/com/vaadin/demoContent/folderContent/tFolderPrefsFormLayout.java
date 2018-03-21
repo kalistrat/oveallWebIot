@@ -3,7 +3,7 @@ package com.vaadin.demoContent.folderContent;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.tUsefulFuctions;
+import com.vaadin.commonFuctions;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -48,119 +48,11 @@ public class tFolderPrefsFormLayout extends VerticalLayout {
         SaveButton.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
         SaveButton.setEnabled(false);
 
-        SaveButton.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-
-                String sErrorMessage = "";
-                String sLogValue = DeviceLoginTextField.getValue();
-                String sPassValue = DevicePassWordTextField.getValue();
-                String sTimeSync = TimeSyncInterval.getValue();
-
-                if (sLogValue.equals("")){
-                    sErrorMessage = sErrorMessage + "Логин контроллера не задан\n";
-                } else {
-                    if (!sLogValue.equals(sCurrentDeviceLog)) {
-                        if (sLogValue.length() > 50) {
-                            sErrorMessage = sErrorMessage + "Длина логина превышает 50 символов\n";
-                        }
-                        if (sLogValue.length() < 5) {
-                            sErrorMessage = sErrorMessage + "Длина логина меньше 5 символов\n";
-                        }
-                        if (tUsefulFuctions.isExistsContLogIn(sLogValue).intValue() == 1) {
-                            sErrorMessage = sErrorMessage + "Указанный логин занят. Введите другой\n";
-                        }
-                        if (!tUsefulFuctions.IsLatinAndDigits(sLogValue)) {
-                            sErrorMessage = sErrorMessage + "Логин должен состоять из латиницы и цифр\n";
-                        }
-                    }
-                }
-
-                if (sPassValue.equals("")){
-                    sErrorMessage = sErrorMessage + "Пароль контроллера не задан\n";
-                } else {
-                    if (sPassValue.length() > 50){
-                        sErrorMessage = sErrorMessage + "Длина пароля превышает 50 символов\n";
-                    }
-                    if (sPassValue.length() < 5){
-                        sErrorMessage = sErrorMessage + "Длина пароля меньше 5 символов\n";
-                    }
-                    if (!tUsefulFuctions.IsLatinAndDigits(sPassValue)){
-                        sErrorMessage = sErrorMessage + "Пароль должен состоять из латиницы и цифр\n";
-                    }
-                }
-                int timeSyncInt = 0;
-
-                if (sTimeSync != null){
-
-                    if (tUsefulFuctions.StrToIntValue(sTimeSync)!= null) {
-
-                        timeSyncInt = Integer.parseInt(sTimeSync);
-
-                        if (timeSyncInt < 1) {
-                            sErrorMessage = sErrorMessage + "Интервал синхронизации не может быть меньше суток\n";
-                        }
-                        if (timeSyncInt > 365) {
-                            sErrorMessage = sErrorMessage + "Интервал синхронизации превышает 365 суток\n";
-                        }
-
-                    } else {
-                        if (!sTimeSync.equals("")) {
-                            sErrorMessage = sErrorMessage + "Интервал синхронизации некорректный\n";
-                        }
-                    }
-
-                }
-
-                if (!sErrorMessage.equals("")){
-                    Notification.show("Ошибка сохранения:",
-                            sErrorMessage,
-                            Notification.Type.TRAY_NOTIFICATION);
-                } else {
-
-                    updateFolderPrefsFormData(
-                    iLeafId
-                    ,iUserLog
-                    ,sLogValue
-                    ,sPassValue
-                    ,tUsefulFuctions.sha256(sPassValue)
-                    ,(String) TimeZoneSelect.getValue()
-                    ,timeSyncInt
-                    );
-
-
-                    SaveButton.setEnabled(false);
-                    EditButton.setEnabled(true);
-                    DeviceLoginTextField.setEnabled(false);
-                    DevicePassWordTextField.setEnabled(false);
-                    TimeZoneSelect.setEnabled(false);
-                    TimeSyncInterval.setEnabled(false);
-
-                    Notification.show("Параметры контроллера изменены!",
-                            null,
-                            Notification.Type.TRAY_NOTIFICATION);
-
-                }
-            }
-        });
 
         EditButton = new Button();
         EditButton.setIcon(VaadinIcons.EDIT);
         EditButton.addStyleName(ValoTheme.BUTTON_SMALL);
         EditButton.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
-
-        EditButton.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                sCurrentDeviceLog = DeviceLoginTextField.getValue();
-                SaveButton.setEnabled(true);
-                EditButton.setEnabled(false);
-                DeviceLoginTextField.setEnabled(true);
-                DevicePassWordTextField.setEnabled(true);
-                TimeZoneSelect.setEnabled(true);
-                TimeSyncInterval.setEnabled(true);
-            }
-        });
 
 
         HorizontalLayout FormHeaderButtons = new HorizontalLayout(
@@ -190,7 +82,7 @@ public class tFolderPrefsFormLayout extends VerticalLayout {
 
         TimeZoneSelect = new NativeSelect("Часовой пояс контроллера :");
         TimeZoneSelect.setNullSelectionAllowed(false);
-        tUsefulFuctions.setTimeZoneList(TimeZoneSelect);
+        setTimeZoneList(TimeZoneSelect);
 
         TimeSyncInterval = new TextField("Интервал синхронизации времени (в сутках) :");
 
@@ -245,11 +137,11 @@ public class tFolderPrefsFormLayout extends VerticalLayout {
     public void setControlerParameters(){
 
         try {
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
+            Class.forName(commonFuctions.JDBC_DRIVER);
             Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
+                    commonFuctions.DB_URL
+                    , commonFuctions.USER
+                    , commonFuctions.PASS
             );
 
             String DataSql = "select udt.leaf_name\n" +
@@ -309,45 +201,37 @@ public class tFolderPrefsFormLayout extends VerticalLayout {
         }
     }
 
-    public void updateFolderPrefsFormData(
-            int qLeafId
-            ,String qUserLog
-            ,String qDeviceLog
-            ,String qDevicePass
-            ,String qDevicePassSha
-            ,String qTimeZone
-            ,int qTimeSyncInt
-    ){
-        try {
+    private void setTimeZoneList(NativeSelect eListBox){
 
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
+        try {
+            Class.forName(commonFuctions.JDBC_DRIVER);
             Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
+                    commonFuctions.DB_URL
+                    , commonFuctions.USER
+                    , commonFuctions.PASS
             );
 
-            CallableStatement Stmt = Con.prepareCall("{call p_updateFolderPrefsFormData(?, ? ,?, ?, ?, ?, ?)}");
-            Stmt.setInt(1, qLeafId);
-            Stmt.setString(2, qUserLog);
-            Stmt.setString(3, qDeviceLog);
-            Stmt.setString(4, qDevicePass);
-            Stmt.setString(5, qDevicePassSha);
-            Stmt.setString(6, qTimeZone);
-            Stmt.setInt(7, qTimeSyncInt);
+            String DataSql = "select tz.timezone_value\n" +
+                    "from timezones tz";
 
-            Stmt.execute();
+            PreparedStatement DataStmt = Con.prepareStatement(DataSql);
+
+            ResultSet DataRs = DataStmt.executeQuery();
+
+            while (DataRs.next()) {
+                eListBox.addItem(DataRs.getString(1));
+            }
+
 
             Con.close();
 
-        }catch(SQLException se){
+        } catch (SQLException se3) {
             //Handle errors for JDBC
-            se.printStackTrace();
-        }catch(Exception e) {
+            se3.printStackTrace();
+        } catch (Exception e13) {
             //Handle errors for Class.forName
-            e.printStackTrace();
+            e13.printStackTrace();
         }
-
     }
 
 }

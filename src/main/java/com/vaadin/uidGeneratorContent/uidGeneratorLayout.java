@@ -1,5 +1,6 @@
 package com.vaadin.uidGeneratorContent;
 
+import com.vaadin.commonFuctions;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -114,11 +115,11 @@ public class uidGeneratorLayout extends VerticalLayout {
     private void addNewUID(String iUID){
         try {
 
-            Class.forName(com.vaadin.tUsefulFuctions.JDBC_DRIVER);
+            Class.forName(commonFuctions.JDBC_DRIVER);
             Connection Con = DriverManager.getConnection(
-                    com.vaadin.tUsefulFuctions.DB_URL
-                    , com.vaadin.tUsefulFuctions.USER
-                    , com.vaadin.tUsefulFuctions.PASS
+                    commonFuctions.DB_URL
+                    , commonFuctions.USER
+                    , commonFuctions.PASS
             );
 
             CallableStatement Stmt = Con.prepareCall("{call pAddNewUID(?)}");
@@ -142,11 +143,11 @@ public class uidGeneratorLayout extends VerticalLayout {
 
         try {
 
-            Class.forName(com.vaadin.tUsefulFuctions.JDBC_DRIVER);
+            Class.forName(commonFuctions.JDBC_DRIVER);
             Connection Con = DriverManager.getConnection(
-                    com.vaadin.tUsefulFuctions.DB_URL
-                    , com.vaadin.tUsefulFuctions.USER
-                    , com.vaadin.tUsefulFuctions.PASS
+                    commonFuctions.DB_URL
+                    , commonFuctions.USER
+                    , commonFuctions.PASS
             );
 
             CallableStatement Stmt = Con.prepareCall("{? = call fisUIDExists(?)}");

@@ -76,7 +76,7 @@ public class tRegistrationWindow extends Window {
 
                 if (!sInputValue.equals("")){
 
-                    if (tUsefulFuctions.StrToIntValue(sInputValue)!= null) {
+                    if (commonFuctions.StrToIntValue(sInputValue)!= null) {
 
                         parseResult = Integer.parseInt(sInputValue);
 
@@ -109,7 +109,7 @@ public class tRegistrationWindow extends Window {
 
                     String wsRes = callUserWsToAddNewUser(
                             sUser
-                            ,tUsefulFuctions.sha256(sPass)
+                            , commonFuctions.sha256(sPass)
                             ,sMail
                             ,sPhone
                             ,userWsUrl
@@ -195,11 +195,11 @@ public class tRegistrationWindow extends Window {
                         //System.out.println("Здесь должна быть проверка логина на длину");
                     }
 
-                    if (!tUsefulFuctions.IsLatinAndDigits(sLog)) {
+                    if (!commonFuctions.IsLatinAndDigits(sLog)) {
                         sErrorMessage = sErrorMessage + "Логин должен состоять из латиницы и цифр\n";
                     }
 
-                    if (tUsefulFuctions.isExistsUserLogin(sLog).intValue() == 1) {
+                    if (isExistsUserLogin(sLog).intValue() == 1) {
                         sErrorMessage = sErrorMessage + "Указанный логин уже используется\n";
                     }
 
@@ -217,7 +217,7 @@ public class tRegistrationWindow extends Window {
                         sErrorMessage = sErrorMessage + "Длина пароля менее 8 символов\n";
                     }
 
-                    if (!tUsefulFuctions.IsLatinAndDigits(sPswd)) {
+                    if (!commonFuctions.IsLatinAndDigits(sPswd)) {
                         sErrorMessage = sErrorMessage + "Пароль должен состоять из латиницы и цифр\n";
                     }
 
@@ -231,7 +231,7 @@ public class tRegistrationWindow extends Window {
                 if (sMail.equals("")) {
                     sErrorMessage = sErrorMessage + "Адрес электронной почты не задан\n";
                 } else {
-                    if (!tUsefulFuctions.IsEmailName(sMail)) {
+                    if (!commonFuctions.IsEmailName(sMail)) {
                         sErrorMessage = sErrorMessage + "Адрес электронной почты не соответствует указанному формату\n";
                     }
 
@@ -239,12 +239,12 @@ public class tRegistrationWindow extends Window {
                         sErrorMessage = sErrorMessage + "Длина адреса электронной почты превышает 150 символов\n";
                     }
 
-                    if (tUsefulFuctions.isExistsUserMail(sMail).intValue() == 1) {
+                    if (isExistsUserMail(sMail).intValue() == 1) {
                         sErrorMessage = sErrorMessage + "Указанная электронная почта уже используется\n";
                     }
                 }
 
-                Integer InptValue = tUsefulFuctions.StrToIntValue(captchaLayout.ResultTextField.getValue());
+                Integer InptValue = commonFuctions.StrToIntValue(captchaLayout.ResultTextField.getValue());
 
                 if (InptValue == null) {
                     sErrorMessage = sErrorMessage + "Введён неверный результат проверочного выражения\n";
@@ -379,14 +379,14 @@ public class tRegistrationWindow extends Window {
         String urlUserWs = null;
         try {
 
-            Class.forName(com.vaadin.tUsefulFuctions.JDBC_DRIVER);
+            Class.forName(commonFuctions.JDBC_DRIVER);
             Connection Con = DriverManager.getConnection(
-                    com.vaadin.tUsefulFuctions.DB_URL
-                    , com.vaadin.tUsefulFuctions.USER
-                    , com.vaadin.tUsefulFuctions.PASS
+                    commonFuctions.DB_URL
+                    , commonFuctions.USER
+                    , commonFuctions.PASS
             );
 
-            String userPassSha256 = tUsefulFuctions.sha256(iUserPass);
+            String userPassSha256 = commonFuctions.sha256(iUserPass);
 
             CallableStatement Stmt = Con.prepareCall("{? = call faddNewUser(?,?,?,?)}");
             Stmt.registerOutParameter(1, Types.VARCHAR);
@@ -414,11 +414,11 @@ public class tRegistrationWindow extends Window {
 
         try {
 
-            Class.forName(com.vaadin.tUsefulFuctions.JDBC_DRIVER);
+            Class.forName(commonFuctions.JDBC_DRIVER);
             Connection Con = DriverManager.getConnection(
-                    com.vaadin.tUsefulFuctions.DB_URL
-                    , com.vaadin.tUsefulFuctions.USER
-                    , com.vaadin.tUsefulFuctions.PASS
+                    commonFuctions.DB_URL
+                    , commonFuctions.USER
+                    , commonFuctions.PASS
             );
 
             CallableStatement Stmt = Con.prepareCall("{call rollBackAddNewUser(?)}");
@@ -477,7 +477,7 @@ public class tRegistrationWindow extends Window {
             HttpResponse response = client.execute(post);
             BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
-            Document resXml = tUsefulFuctions.loadXMLFromString(rd.lines().collect(Collectors.joining()));
+            Document resXml = commonFuctions.loadXMLFromString(rd.lines().collect(Collectors.joining()));
             respXml = XPathFactory.newInstance().newXPath()
                     .compile("//return").evaluate(resXml);
 
@@ -486,5 +486,66 @@ public class tRegistrationWindow extends Window {
             e.printStackTrace();
         }
         return respXml;
+    }
+
+
+    private Integer isExistsUserMail(String qMailValue){
+        Integer isE = 0;
+        try {
+
+            Class.forName(commonFuctions.JDBC_DRIVER);
+            Connection Con = DriverManager.getConnection(
+                    commonFuctions.DB_URL
+                    , commonFuctions.USER
+                    , commonFuctions.PASS
+            );
+
+            CallableStatement callStmt = Con.prepareCall("{? = call fisExistsUserMail(?)}");
+            callStmt.registerOutParameter(1, Types.INTEGER);
+            callStmt.setString(2, qMailValue);
+            callStmt.execute();
+
+            isE =  callStmt.getInt(1);
+
+            Con.close();
+
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return isE;
+    }
+
+    private Integer isExistsUserLogin(String qLoginValue){
+        Integer isE = 0;
+        try {
+
+            Class.forName(commonFuctions.JDBC_DRIVER);
+            Connection Con = DriverManager.getConnection(
+                    commonFuctions.DB_URL
+                    , commonFuctions.USER
+                    , commonFuctions.PASS
+            );
+
+            CallableStatement callStmt = Con.prepareCall("{? = call fisExistsUserLogin(?)}");
+            callStmt.registerOutParameter(1, Types.INTEGER);
+            callStmt.setString(2, qLoginValue);
+            callStmt.execute();
+
+            isE =  callStmt.getInt(1);
+
+            Con.close();
+
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return isE;
     }
 }

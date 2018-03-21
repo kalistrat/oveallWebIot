@@ -1,9 +1,6 @@
 package com.vaadin.demoContent;
 
 import com.vaadin.demoContent.folderContent.tFolderLayout;
-import com.vaadin.demoContent.tDeviceLayout;
-import com.vaadin.demoContent.tTree;
-import com.vaadin.tUsefulFuctions;
 import com.vaadin.ui.VerticalLayout;
 
 import java.util.ArrayList;
@@ -125,21 +122,4 @@ public class tTreeContentLayout extends VerticalLayout {
         return getChildAllLeafsByList(GetChildLeafsById(LeafId));
     }
 
-    public void reloadTreeContainer(){
-        itTree.TreeContainer.removeAllItems();
-        //itTree.TreeContainer.removeAllContainerFilters();
-        tUsefulFuctions.refreshUserTree(iUserLog);
-        itTree.tTreeGetData(iUserLog);
-
-        for (Object id : itTree.rootItemIds()) {
-            itTree.expandItemsRecursively(id);
-        }
-
-        for (Object id : itTree.TreeContainer.getItemIds()){
-            if (!itTree.TreeContainer.hasChildren(id))
-                itTree.TreeContainer.setChildrenAllowed(id, false);
-        }
-
-
-    }
 }

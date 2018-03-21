@@ -3,7 +3,7 @@ package com.vaadin.demoContent.diagramContent;
 import com.google.gson.Gson;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.tUsefulFuctions;
+import com.vaadin.commonFuctions;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -106,11 +106,11 @@ public class DiagramLayout extends VerticalLayout {
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
         try {
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
+            Class.forName(commonFuctions.JDBC_DRIVER);
             Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
+                    commonFuctions.DB_URL
+                    , commonFuctions.USER
+                    , commonFuctions.PASS
             );
 
             String DataSql = "\n" +
@@ -151,10 +151,10 @@ public class DiagramLayout extends VerticalLayout {
 
             if (mesDataType.equals("число")) {
                 while (DataRs.next()) {
-                    if (tUsefulFuctions.ParseDouble(DataRs.getString(2)) != null) {
+                    if (commonFuctions.ParseDouble(DataRs.getString(2)) != null) {
                         dList.add(new tDetectorDiagramData(
                                 df.format(new Date(DataRs.getTimestamp(1).getTime()))
-                                , tUsefulFuctions.ParseDouble(DataRs.getString(2))
+                                , commonFuctions.ParseDouble(DataRs.getString(2))
                                 , ""
                         ));
                     }
@@ -164,7 +164,7 @@ public class DiagramLayout extends VerticalLayout {
                 while (DataRs.next()) {
                         dList.add(new tDetectorDiagramData(
                                 df.format(new Date(DataRs.getTimestamp(1).getTime()))
-                                , tUsefulFuctions.ParseDouble(DataRs.getString(3))
+                                , commonFuctions.ParseDouble(DataRs.getString(3))
                                 , DataRs.getString(4)
                         ));
                 }

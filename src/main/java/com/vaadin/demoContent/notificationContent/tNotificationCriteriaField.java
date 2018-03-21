@@ -1,7 +1,7 @@
 package com.vaadin.demoContent.notificationContent;
 
 
-import com.vaadin.tUsefulFuctions;
+import com.vaadin.commonFuctions;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -51,15 +51,15 @@ public class tNotificationCriteriaField extends VerticalLayout {
     }
 
     public void setFieldsValues(String sValue){
-        List<String> sValues = tUsefulFuctions.GetListFromString(sValue,"|");
+        List<String> sValues = commonFuctions.GetListFromString(sValue,"|");
         if (sValues.size() == 2) {
-            sValueFrom = tUsefulFuctions.ParseDouble(sValues.get(0));
-            sValueTill = tUsefulFuctions.ParseDouble(sValues.get(1));
+            sValueFrom = commonFuctions.ParseDouble(sValues.get(0));
+            sValueTill = commonFuctions.ParseDouble(sValues.get(1));
             valueFromField.setValue(String.valueOf(sValueFrom));
             valueTillField.setValue(String.valueOf(sValueTill));
             isInterval = true;
         } else {
-            sValueFrom = tUsefulFuctions.ParseDouble(sValue);
+            sValueFrom = commonFuctions.ParseDouble(sValue);
             valueFromField.setValue(String.valueOf(sValueFrom));
             isInterval =false;
         }

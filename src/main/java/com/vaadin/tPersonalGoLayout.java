@@ -1,6 +1,5 @@
 package com.vaadin;
 
-import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
@@ -77,11 +76,11 @@ public class tPersonalGoLayout extends HorizontalLayout {
 
         try {
 
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
+            Class.forName(commonFuctions.JDBC_DRIVER);
             Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
+                    commonFuctions.DB_URL
+                    , commonFuctions.USER
+                    , commonFuctions.PASS
             );
 
             CallableStatement Stmt = Con.prepareCall("{? = call getUserWebServerUrl(?)}");

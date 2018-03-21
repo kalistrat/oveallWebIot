@@ -5,7 +5,7 @@ import com.vaadin.data.util.HierarchicalContainer;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.tUsefulFuctions;
+import com.vaadin.commonFuctions;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -139,11 +139,11 @@ public class tActuatorStateConditionLayout extends VerticalLayout {
     public void setStatesConditionContainer(){
 
         try {
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
+            Class.forName(commonFuctions.JDBC_DRIVER);
             Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
+                    commonFuctions.DB_URL
+                    , commonFuctions.USER
+                    , commonFuctions.PASS
             );
 
             String DataSql = "select uas.actuator_state_name\n" +

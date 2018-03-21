@@ -1,13 +1,10 @@
 package com.vaadin;
 
-import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.hezamu.canvas.Canvas;
-
-import java.util.Random;
 
 /**
  * Created by kalistrat on 14.06.2017.
@@ -40,9 +37,9 @@ public class tCaptchaLayout extends VerticalLayout {
         canvas.stroke();
         canvas.closePath();
 
-        int ca = tUsefulFuctions.genRandInt(1,9);
-        int cb = tUsefulFuctions.genRandInt(1,9);
-        String csign = tUsefulFuctions.genSign();
+        int ca = commonFuctions.genRandInt(1,9);
+        int cb = commonFuctions.genRandInt(1,9);
+        String csign = commonFuctions.genSign();
         String genExpr = String.valueOf(ca) + "  " + csign + "  " + String.valueOf(cb);
 
 

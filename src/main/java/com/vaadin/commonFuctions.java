@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 /**
  * Created by kalistrat on 24.01.2017.
  */
-public class tUsefulFuctions {
+public class commonFuctions {
 
     public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     public static final String DB_URL = "jdbc:mysql://localhost/teljournal";
@@ -67,34 +67,6 @@ public class tUsefulFuctions {
             }
         }
         else return null;
-    }
-
-    public static void refreshUserTree(
-            String qUserLog
-    ){
-        try {
-
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
-            Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
-            );
-
-            CallableStatement treeStmt = Con.prepareCall("{call p_refresh_user_tree(?)}");
-            treeStmt.setString(1, qUserLog);
-            treeStmt.execute();
-
-            Con.close();
-
-        }catch(SQLException se){
-            //Handle errors for JDBC
-            se.printStackTrace();
-        }catch(Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        }
-
     }
 
 
@@ -193,129 +165,5 @@ public class tUsefulFuctions {
         }
         return age;
     }
-
-    public static void setTimeZoneList(NativeSelect eListBox){
-
-        try {
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
-            Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
-            );
-
-            String DataSql = "select tz.timezone_value\n" +
-                    "from timezones tz";
-
-            PreparedStatement DataStmt = Con.prepareStatement(DataSql);
-
-            ResultSet DataRs = DataStmt.executeQuery();
-
-            while (DataRs.next()) {
-                eListBox.addItem(DataRs.getString(1));
-            }
-
-
-            Con.close();
-
-        } catch (SQLException se3) {
-            //Handle errors for JDBC
-            se3.printStackTrace();
-        } catch (Exception e13) {
-            //Handle errors for Class.forName
-            e13.printStackTrace();
-        }
-    }
-
-    public static Integer isExistsContLogIn(String qLogIn){
-        Integer isE = 0;
-        try {
-
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
-            Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
-            );
-
-            CallableStatement callStmt = Con.prepareCall("{? = call fIsExistsContLogin(?)}");
-            callStmt.registerOutParameter(1, Types.INTEGER);
-            callStmt.setString(2, qLogIn);
-            callStmt.execute();
-
-            isE =  callStmt.getInt(1);
-
-            Con.close();
-
-        }catch(SQLException se){
-            //Handle errors for JDBC
-            se.printStackTrace();
-        }catch(Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        }
-        return isE;
-    }
-
-    public static Integer isExistsUserMail(String qMailValue){
-        Integer isE = 0;
-        try {
-
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
-            Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
-            );
-
-            CallableStatement callStmt = Con.prepareCall("{? = call fisExistsUserMail(?)}");
-            callStmt.registerOutParameter(1, Types.INTEGER);
-            callStmt.setString(2, qMailValue);
-            callStmt.execute();
-
-            isE =  callStmt.getInt(1);
-
-            Con.close();
-
-        }catch(SQLException se){
-            //Handle errors for JDBC
-            se.printStackTrace();
-        }catch(Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        }
-        return isE;
-    }
-
-    public static Integer isExistsUserLogin(String qLoginValue){
-        Integer isE = 0;
-        try {
-
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
-            Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
-            );
-
-            CallableStatement callStmt = Con.prepareCall("{? = call fisExistsUserLogin(?)}");
-            callStmt.registerOutParameter(1, Types.INTEGER);
-            callStmt.setString(2, qLoginValue);
-            callStmt.execute();
-
-            isE =  callStmt.getInt(1);
-
-            Con.close();
-
-        }catch(SQLException se){
-            //Handle errors for JDBC
-            se.printStackTrace();
-        }catch(Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        }
-        return isE;
-    }
-
 
 }

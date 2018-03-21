@@ -3,7 +3,7 @@ package com.vaadin.demoContent.actuatorContent;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.tUsefulFuctions;
+import com.vaadin.commonFuctions;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -157,11 +157,11 @@ public class tVarConditionLayout extends VerticalLayout {
 
     public void setConditionVariables(int qStateConditionId, boolean qSelectEnable){
         try {
-            Class.forName(tUsefulFuctions.JDBC_DRIVER);
+            Class.forName(commonFuctions.JDBC_DRIVER);
             Connection Con = DriverManager.getConnection(
-                    tUsefulFuctions.DB_URL
-                    , tUsefulFuctions.USER
-                    , tUsefulFuctions.PASS
+                    commonFuctions.DB_URL
+                    , commonFuctions.USER
+                    , commonFuctions.PASS
             );
             VarList.clear();
 
@@ -229,7 +229,7 @@ public class tVarConditionLayout extends VerticalLayout {
             } catch (Exception e) {
                 String MessAge = e.getMessage();
                 if (MessAge.contains("нет переменной")) {
-                    List<String> MessPieces = tUsefulFuctions.GetListFromString(MessAge, "|");
+                    List<String> MessPieces = commonFuctions.GetListFromString(MessAge, "|");
                     exprParser.setVariable(MessPieces.get(1), 7.0);
                     k = k + 1;
                 } else {

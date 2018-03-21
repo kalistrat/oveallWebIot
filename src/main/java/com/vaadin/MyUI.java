@@ -25,7 +25,6 @@ public class MyUI extends UI {
 
         //new Navigator(this, this);
         //getNavigator().addView(tGuestView.NAME, tGuestView.class);//
-        //getNavigator().addView(tMainView.NAME,tMainView.class);
 
 //        getNavigator().addViewChangeListener(new ViewChangeListener() {
 //
@@ -50,6 +49,7 @@ public class MyUI extends UI {
 //
 //            }
 //        });
+
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
