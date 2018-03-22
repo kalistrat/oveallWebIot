@@ -111,7 +111,7 @@ public class uidSearchJournalLayout extends VerticalLayout {
         try {
             Class.forName(commonFuctions.JDBC_DRIVER);
             Connection Con = DriverManager.getConnection(
-                    commonFuctions.DB_URL
+                    commonFuctions.TJ_DB_URL
                     , commonFuctions.USER
                     , commonFuctions.PASS
             );

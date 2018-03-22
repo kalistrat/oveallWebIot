@@ -1,7 +1,6 @@
 package com.vaadin;
 
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.demoContent.demoLayout;
 import com.vaadin.server.*;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
@@ -10,17 +9,16 @@ import com.vaadin.uidGeneratorContent.uidGeneratorTabContent;
 /**
  * Created by SemenovNA on 02.08.2016.
  */
-public class tGuestView extends CustomComponent implements View {
+public class mainPageLayout extends VerticalLayout {
 
-    public static final String NAME = "Guest";
+
     Button regWindowButton;
-    //Button personalCabButton;
     Button questionWindowButton;
-    tPersonalGoLayout personalGoLayout;
+    goPersonalLayout personalGoLayout;
     private TabSheet overallWebSiteSheet;
 
 
-    public tGuestView(){
+    public mainPageLayout(String userType){
 
         ThemeResource resource = new ThemeResource("TJAY.png");
 
@@ -46,7 +44,7 @@ public class tGuestView extends CustomComponent implements View {
         questionWindowButton.addStyleName(ValoTheme.BUTTON_LINK);
         questionWindowButton.addStyleName(ValoTheme.BUTTON_SMALL);
 
-        personalGoLayout = new tPersonalGoLayout();
+        personalGoLayout = new goPersonalLayout();
 
         HorizontalLayout topRightButtonLayout = new HorizontalLayout();
         topRightButtonLayout.setSpacing(true);
@@ -97,12 +95,17 @@ public class tGuestView extends CustomComponent implements View {
         commonTabCont.setSizeFull();
         commonTabCont.setComponentAlignment(commonImgLay,Alignment.MIDDLE_CENTER);
 
+        demoLayout DemoLayout = new demoLayout();
+
         overallWebSiteSheet = new TabSheet();
         overallWebSiteSheet.addTab(commonTabCont, "Общее", com.vaadin.icons.VaadinIcons.HOME);
         overallWebSiteSheet.addTab(new Label("Продукция"), "Продукция", com.vaadin.icons.VaadinIcons.FACTORY);
         overallWebSiteSheet.addTab(new Label("Подключение"), "Подключение", com.vaadin.icons.VaadinIcons.CONNECT);
-        overallWebSiteSheet.addTab(new Label("Демо"), "Демо", com.vaadin.icons.VaadinIcons.CHART);
-        overallWebSiteSheet.addTab(genTabCont, "Генерация UID", com.vaadin.icons.VaadinIcons.RANDOM);
+        overallWebSiteSheet.addTab(DemoLayout, "Демо", com.vaadin.icons.VaadinIcons.CHART);
+
+//        if (userType.equals("ADMIN")) {
+            overallWebSiteSheet.addTab(genTabCont, "Генерация UID", com.vaadin.icons.VaadinIcons.RANDOM);
+//        }
 
         overallWebSiteSheet.setWidth("100%");
         overallWebSiteSheet.setHeightUndefined();
@@ -114,16 +117,12 @@ public class tGuestView extends CustomComponent implements View {
         logoLayout.setHeightUndefined();
         logoLayout.setWidth("100%");
 
-        VerticalLayout contentLayout = new VerticalLayout();
-        contentLayout.addComponent(topButtonLayout);
-        contentLayout.addComponent(logoLayout);
-        contentLayout.addComponent(overallWebSiteSheet);
-        contentLayout.setComponentAlignment(overallWebSiteSheet,Alignment.MIDDLE_CENTER);
 
-        setCompositionRoot(contentLayout);
-    }
+        this.addComponent(topButtonLayout);
+        this.addComponent(logoLayout);
+        this.addComponent(overallWebSiteSheet);
+        this.setComponentAlignment(overallWebSiteSheet,Alignment.MIDDLE_CENTER);
 
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
 
     }
 

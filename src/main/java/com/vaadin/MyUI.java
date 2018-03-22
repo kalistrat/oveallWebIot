@@ -4,8 +4,6 @@ import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.navigator.Navigator;
-import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
@@ -23,32 +21,24 @@ public class MyUI extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
-        //new Navigator(this, this);
-        //getNavigator().addView(tGuestView.NAME, tGuestView.class);//
+        String userType;
+        String userName = (String) getSession().getAttribute("user");
 
-//        getNavigator().addViewChangeListener(new ViewChangeListener() {
-//
-//            @Override
-//            public boolean beforeViewChange(ViewChangeEvent event) {
-//
-//                boolean isLoggedIn = getSession().getAttribute("user") != null;
-//                boolean isGuestView = event.getNewView() instanceof tGuestView;
-//
-//                    if (!isLoggedIn && !isGuestView) {
-//                        getNavigator().navigateTo(tGuestView.NAME);
-//                        return false;
-//                    } else if (isLoggedIn && isGuestView) {
-//                        return false;
-//                    }
-//
-//                return true;
-//            }
-//
-//            @Override
-//            public void afterViewChange(ViewChangeEvent event) {
-//
-//            }
-//        });
+        if (userName != null){
+            if (userName.equals("k")) {
+                userType = "ADMIN";
+            } else {
+                userType = "USER";
+            }
+        } else {
+            userType = "GUEST";
+        }
+
+        System.out.println("userType : " + userType);
+
+        mainPageLayout mPage = new mainPageLayout(userType);
+        setContent(mPage);
+
 
     }
 

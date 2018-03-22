@@ -24,9 +24,11 @@ import java.util.regex.Pattern;
 public class commonFuctions {
 
     public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    public static final String DB_URL = "jdbc:mysql://localhost/teljournal";
+    public static final String DB_URL = "jdbc:mysql://localhost/things";
+    public static final String TJ_DB_URL = "jdbc:mysql://localhost/teljournal";
     public static final String USER = "kalistrat";
     public static final String PASS = "045813";
+
 
     public static List<String> GetListFromString(String DevidedString,String Devider){
         List<String> StrPieces = new ArrayList<String>();

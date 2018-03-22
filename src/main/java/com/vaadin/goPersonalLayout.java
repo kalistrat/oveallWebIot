@@ -11,12 +11,12 @@ import java.sql.*;
 /**
  * Created by kalistrat on 12.03.2018.
  */
-public class tPersonalGoLayout extends HorizontalLayout {
+public class goPersonalLayout extends HorizontalLayout {
     Button personalGoButton;
     TextField userLogin;
     Button personalCabButton;
 
-    public tPersonalGoLayout(){
+    public goPersonalLayout(){
 
         personalGoButton = new Button();
         personalGoButton.setIcon(com.vaadin.icons.VaadinIcons.SIGN_IN);
@@ -44,7 +44,7 @@ public class tPersonalGoLayout extends HorizontalLayout {
         personalCabButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                tPersonalGoLayout goLayout = (tPersonalGoLayout) clickEvent.getButton().getData();
+                goPersonalLayout goLayout = (goPersonalLayout) clickEvent.getButton().getData();
                 goLayout.removeAllComponents();
                 goLayout.addComponent(userLogin);
                 goLayout.addComponent(personalGoButton);
@@ -59,7 +59,7 @@ public class tPersonalGoLayout extends HorizontalLayout {
                 String usrUrl = getUserWebServerUrl(usrLog);
                 if (!usrUrl.equals("")) {
                     getUI().getPage().setLocation(usrUrl);
-                    tPersonalGoLayout goLayout = (tPersonalGoLayout) clickEvent.getButton().getData();
+                    goPersonalLayout goLayout = (goPersonalLayout) clickEvent.getButton().getData();
                     goLayout.removeAllComponents();
                     goLayout.addComponent(personalCabButton);
                 } else {
@@ -78,7 +78,7 @@ public class tPersonalGoLayout extends HorizontalLayout {
 
             Class.forName(commonFuctions.JDBC_DRIVER);
             Connection Con = DriverManager.getConnection(
-                    commonFuctions.DB_URL
+                    commonFuctions.TJ_DB_URL
                     , commonFuctions.USER
                     , commonFuctions.PASS
             );
