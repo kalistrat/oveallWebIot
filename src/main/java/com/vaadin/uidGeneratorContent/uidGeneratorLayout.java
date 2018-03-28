@@ -46,6 +46,8 @@ public class uidGeneratorLayout extends VerticalLayout {
                         uidPrefix = "BRI-";
                     } else if (uidTypeSelect.getValue().equals("Датчик")) {
                         uidPrefix = "SEN-";
+                    } else if (uidTypeSelect.getValue().equals("Метео-пакет")) {
+                        uidPrefix = "MET-";
                     } else {
                         uidPrefix = "RET-";
                     }
@@ -71,6 +73,7 @@ public class uidGeneratorLayout extends VerticalLayout {
         uidTypeSelect.addItem("Бридж");
         uidTypeSelect.addItem("Датчик");
         uidTypeSelect.addItem("Ретранслятор");
+        uidTypeSelect.addItem("Метео-пакет");
         uidTypeSelect.setNullSelectionAllowed(false);
         uidTypeSelect.select("Датчик");
         uidTypeSelect.addStyleName("SelectFont");
@@ -117,7 +120,7 @@ public class uidGeneratorLayout extends VerticalLayout {
 
             Class.forName(commonFuctions.JDBC_DRIVER);
             Connection Con = DriverManager.getConnection(
-                    commonFuctions.DB_URL
+                    commonFuctions.TJ_DB_URL
                     , commonFuctions.USER
                     , commonFuctions.PASS
             );

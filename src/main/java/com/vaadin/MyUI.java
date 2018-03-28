@@ -34,7 +34,7 @@ public class MyUI extends UI {
             userType = "GUEST";
         }
 
-        System.out.println("userType : " + userType);
+        //System.out.println("userType : " + userType);
 
         mainPageLayout mPage = new mainPageLayout(userType);
         setContent(mPage);
