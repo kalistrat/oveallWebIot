@@ -1,13 +1,12 @@
 -- --------------------------------------------------------
 -- Хост:                         127.0.0.1
 -- Версия сервера:               5.5.23 - MySQL Community Server (GPL)
--- Операционная система:         Win64
--- HeidiSQL Версия:              9.4.0.5125
+-- ОС Сервера:                   Win32
+-- HeidiSQL Версия:              9.3.0.4984
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
@@ -22,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `device_status` (
   KEY `FK_device_status_status` (`STATUS_ID`),
   CONSTRAINT `FK_DEVICE_STATUS_sold_devices` FOREIGN KEY (`SOLD_DEVICE_ID`) REFERENCES `sold_devices` (`SOLD_DEVICE_ID`),
   CONSTRAINT `FK_device_status_status` FOREIGN KEY (`STATUS_ID`) REFERENCES `status` (`STATUS_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
 
 -- Дамп данных таблицы teljournal.device_status: ~97 rows (приблизительно)
 DELETE FROM `device_status`;
@@ -124,8 +123,11 @@ INSERT INTO `device_status` (`DEVICE_STATUS_ID`, `STATUS_DATE`, `SOLD_DEVICE_ID`
 	(95, '2018-03-28 22:59:14', 33, 1),
 	(96, '2018-03-28 22:59:15', 34, 1),
 	(97, '2018-03-28 22:59:16', 35, 1),
-	(98, '2018-03-28 22:59:17', 36, 1);
+	(98, '2018-03-28 22:59:17', 36, 1),
+	(99, '2018-03-29 15:02:59', 33, 2),
+	(100, '2018-03-29 15:47:13', 33, 1);
 /*!40000 ALTER TABLE `device_status` ENABLE KEYS */;
+
 
 -- Дамп структуры для функция teljournal.faddNewUser
 DELIMITER //
@@ -176,6 +178,7 @@ return i_ws_url;
 END//
 DELIMITER ;
 
+
 -- Дамп структуры для функция teljournal.fGetUserPassSha
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `fGetUserPassSha`(`eUserLog` VARCHAR(50)) RETURNS varchar(150) CHARSET utf8
@@ -187,6 +190,7 @@ where tu.USER_LOGIN = eUserLog
 );
 END//
 DELIMITER ;
+
 
 -- Дамп структуры для функция teljournal.fisExistsUserLogin
 DELIMITER //
@@ -206,6 +210,7 @@ where u.USER_LOGIN = eLogin
 end//
 DELIMITER ;
 
+
 -- Дамп структуры для функция teljournal.fisExistsUserMail
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `fisExistsUserMail`(
@@ -224,6 +229,7 @@ where u.USER_MAIL = eMail
 end//
 DELIMITER ;
 
+
 -- Дамп структуры для функция teljournal.fisUIDExists
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `fisUIDExists`(`eUID` VARCHAR(50)) RETURNS int(11)
@@ -235,6 +241,7 @@ where sd.UID = eUID
 );
 END//
 DELIMITER ;
+
 
 -- Дамп структуры для процедура teljournal.getDeviceArgs
 DELIMITER //
@@ -263,6 +270,7 @@ where sd.UID = eUID;
  
 END//
 DELIMITER ;
+
 
 -- Дамп структуры для функция teljournal.getUIDStatus
 DELIMITER //
@@ -295,6 +303,7 @@ return i_status_code;
 END//
 DELIMITER ;
 
+
 -- Дамп структуры для функция teljournal.getUserWebServerUrl
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `getUserWebServerUrl`(
@@ -323,6 +332,7 @@ end if;
 return iUserWebServerUrl;
 END//
 DELIMITER ;
+
 
 -- Дамп структуры для процедура teljournal.pAddNewUID
 DELIMITER //
@@ -359,6 +369,7 @@ where SOLD_DEVICE_ID = i_sold_device_id;
 END//
 DELIMITER ;
 
+
 -- Дамп структуры для процедура teljournal.rollBackAddNewUser
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` PROCEDURE `rollBackAddNewUser`(IN `eUserLog` VARCHAR(50))
@@ -367,6 +378,7 @@ delete from tj_users
 where USER_LOGIN = eUserLog;
 END//
 DELIMITER ;
+
 
 -- Дамп структуры для процедура teljournal.setUserEnvironment
 DELIMITER //
@@ -378,6 +390,7 @@ set uws.PERSONAL_WEB_URL = 'http://snslog.ru/personal'
 where uws.SERVER_ID = 1;
 END//
 DELIMITER ;
+
 
 -- Дамп структуры для таблица teljournal.sold_devices
 CREATE TABLE IF NOT EXISTS `sold_devices` (
@@ -433,11 +446,12 @@ INSERT INTO `sold_devices` (`SOLD_DEVICE_ID`, `UID`, `DATE_FROM`, `DEVICE_STATUS
 	(30, 'SEN-CS3VEK79WZFD', '2018-03-19 21:26:54', 83, 'OUTSIDE', NULL, NULL),
 	(31, 'SEN-1CBMEYOL5XZ4', '2018-03-19 21:26:56', 84, 'OUTSIDE', NULL, NULL),
 	(32, 'MET-TM0TCLMP7PIO', '2018-03-28 22:58:53', 94, 'OUTSIDE', NULL, NULL),
-	(33, 'MET-23JWEVCSXRB3', '2018-03-28 22:59:14', 95, 'OUTSIDE', NULL, NULL),
+	(33, 'MET-23JWEVCSXRB3', '2018-03-28 22:59:14', 100, 'OUTSIDE', NULL, NULL),
 	(34, 'MET-6P9XGGNK8BT9', '2018-03-28 22:59:15', 96, 'OUTSIDE', NULL, NULL),
 	(35, 'MET-0QNX2U54TZX5', '2018-03-28 22:59:16', 97, 'OUTSIDE', NULL, NULL),
 	(36, 'MET-009710IFQ0BQ', '2018-03-28 22:59:17', 98, 'OUTSIDE', NULL, NULL);
 /*!40000 ALTER TABLE `sold_devices` ENABLE KEYS */;
+
 
 -- Дамп структуры для таблица teljournal.status
 CREATE TABLE IF NOT EXISTS `status` (
@@ -455,6 +469,7 @@ INSERT INTO `status` (`STATUS_ID`, `STATUS_CODE`, `STATUS_NAME`) VALUES
 	(2, 'AWAINTING', 'Ожидает подключения'),
 	(3, 'CONNECTED', 'Подключено');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
+
 
 -- Дамп структуры для таблица teljournal.tj_users
 CREATE TABLE IF NOT EXISTS `tj_users` (
@@ -481,6 +496,7 @@ INSERT INTO `tj_users` (`USER_ID`, `USER_LOGIN`, `USER_PASSWORD`, `USER_MAIL`, `
 	(9, 'semenovna', '4c4de41965012a94d6fcca5abbb792139e5f88f9149af99571be04d6b1afdcee', 'n7.semenov@gmail.com', '159951', 1),
 	(11, 'akmakmakm', '6fee22b68be57b28b3d49a85ec2d979edfb1cbdd2c6a9d440dfe65f25c495fea', 'akminfo11@mail.ru', '159951159', 1);
 /*!40000 ALTER TABLE `tj_users` ENABLE KEYS */;
+
 
 -- Дамп структуры для процедура teljournal.updateSoldDeviceStatus
 DELIMITER //
@@ -550,6 +566,7 @@ end if;
 END//
 DELIMITER ;
 
+
 -- Дамп структуры для таблица teljournal.user_web_servers
 CREATE TABLE IF NOT EXISTS `user_web_servers` (
   `SERVER_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -565,7 +582,6 @@ DELETE FROM `user_web_servers`;
 INSERT INTO `user_web_servers` (`SERVER_ID`, `PERSONAL_WEB_URL`, `WEB_SERVICE_URL`, `COUNT_USERS`) VALUES
 	(1, 'http://localhost:8080/personal', 'http://localhost:8080/userWs/Integration?wsdl', 6);
 /*!40000 ALTER TABLE `user_web_servers` ENABLE KEYS */;
-
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
