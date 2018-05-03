@@ -22,9 +22,9 @@ CREATE TABLE IF NOT EXISTS `device_status` (
   KEY `FK_device_status_status` (`STATUS_ID`),
   CONSTRAINT `FK_DEVICE_STATUS_sold_devices` FOREIGN KEY (`SOLD_DEVICE_ID`) REFERENCES `sold_devices` (`SOLD_DEVICE_ID`),
   CONSTRAINT `FK_device_status_status` FOREIGN KEY (`STATUS_ID`) REFERENCES `status` (`STATUS_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы teljournal.device_status: ~109 rows (приблизительно)
+-- Дамп данных таблицы teljournal.device_status: ~121 rows (приблизительно)
 DELETE FROM `device_status`;
 /*!40000 ALTER TABLE `device_status` DISABLE KEYS */;
 INSERT INTO `device_status` (`DEVICE_STATUS_ID`, `STATUS_DATE`, `SOLD_DEVICE_ID`, `STATUS_ID`) VALUES
@@ -142,7 +142,13 @@ INSERT INTO `device_status` (`DEVICE_STATUS_ID`, `STATUS_DATE`, `SOLD_DEVICE_ID`
 	(113, '2018-03-29 23:13:55', 30, 3),
 	(114, '2018-03-29 23:14:51', 33, 2),
 	(115, '2018-03-29 23:15:28', 23, 2),
-	(116, '2018-03-29 23:15:51', 33, 3);
+	(116, '2018-03-29 23:15:51', 33, 3),
+	(117, '2018-04-27 23:21:10', 37, 1),
+	(118, '2018-04-27 23:21:44', 37, 2),
+	(119, '2018-04-27 23:21:55', 37, 3),
+	(120, '2018-04-27 23:23:21', 38, 1),
+	(121, '2018-04-27 23:23:59', 38, 2),
+	(122, '2018-04-27 23:24:03', 38, 3);
 /*!40000 ALTER TABLE `device_status` ENABLE KEYS */;
 
 -- Дамп структуры для функция teljournal.faddNewUser
@@ -414,9 +420,9 @@ CREATE TABLE IF NOT EXISTS `sold_devices` (
   CONSTRAINT `FK_sold_devices_device_status` FOREIGN KEY (`DEVICE_STATUS_ID`) REFERENCES `device_status` (`DEVICE_STATUS_ID`),
   CONSTRAINT `FK_sold_devices_tj_users` FOREIGN KEY (`USER_ID`) REFERENCES `tj_users` (`USER_ID`),
   CONSTRAINT `FK_sold_devices_user_web_servers` FOREIGN KEY (`SERVER_ID`) REFERENCES `user_web_servers` (`SERVER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COMMENT='Проданные устройства';
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COMMENT='Проданные устройства';
 
--- Дамп данных таблицы teljournal.sold_devices: ~35 rows (приблизительно)
+-- Дамп данных таблицы teljournal.sold_devices: ~37 rows (приблизительно)
 DELETE FROM `sold_devices`;
 /*!40000 ALTER TABLE `sold_devices` DISABLE KEYS */;
 INSERT INTO `sold_devices` (`SOLD_DEVICE_ID`, `UID`, `DATE_FROM`, `DEVICE_STATUS_ID`, `CURRENT_STATUS_CODE`, `USER_ID`, `SERVER_ID`) VALUES
@@ -454,7 +460,9 @@ INSERT INTO `sold_devices` (`SOLD_DEVICE_ID`, `UID`, `DATE_FROM`, `DEVICE_STATUS
 	(33, 'MET-23JWEVCSXRB3', '2018-03-28 22:59:14', 116, 'CONNECTED', 1, 1),
 	(34, 'MET-6P9XGGNK8BT9', '2018-03-28 22:59:15', 96, 'OUTSIDE', NULL, NULL),
 	(35, 'MET-0QNX2U54TZX5', '2018-03-28 22:59:16', 97, 'OUTSIDE', NULL, NULL),
-	(36, 'MET-009710IFQ0BQ', '2018-03-28 22:59:17', 105, 'OUTSIDE', NULL, NULL);
+	(36, 'MET-009710IFQ0BQ', '2018-03-28 22:59:17', 105, 'OUTSIDE', NULL, NULL),
+	(37, 'BRI-7LC6POWPE12U', '2018-04-27 23:21:10', 119, 'CONNECTED', 1, 1),
+	(38, 'SEN-X6V3BSRHSMBJ', '2018-04-27 23:23:21', 122, 'CONNECTED', 1, 1);
 /*!40000 ALTER TABLE `sold_devices` ENABLE KEYS */;
 
 -- Дамп структуры для таблица teljournal.status
@@ -581,7 +589,7 @@ CREATE TABLE IF NOT EXISTS `user_web_servers` (
 DELETE FROM `user_web_servers`;
 /*!40000 ALTER TABLE `user_web_servers` DISABLE KEYS */;
 INSERT INTO `user_web_servers` (`SERVER_ID`, `PERSONAL_WEB_URL`, `WEB_SERVICE_URL`, `COUNT_USERS`) VALUES
-	(1, 'http://localhost:8080/personal', 'http://localhost:8182/userLinkWebService/Integration?wsdl', 6);
+	(1, 'http://localhost:8080/personal', 'http://localhost:8080/userWs/Integration?wsdl', 6);
 /*!40000 ALTER TABLE `user_web_servers` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
