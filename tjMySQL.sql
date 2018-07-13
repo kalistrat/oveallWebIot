@@ -1,13 +1,12 @@
 -- --------------------------------------------------------
 -- Хост:                         127.0.0.1
 -- Версия сервера:               5.5.23 - MySQL Community Server (GPL)
--- Операционная система:         Win64
--- HeidiSQL Версия:              9.4.0.5125
+-- ОС Сервера:                   Win32
+-- HeidiSQL Версия:              9.3.0.4984
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
@@ -151,6 +150,7 @@ INSERT INTO `device_status` (`DEVICE_STATUS_ID`, `STATUS_DATE`, `SOLD_DEVICE_ID`
 	(122, '2018-04-27 23:24:03', 38, 3);
 /*!40000 ALTER TABLE `device_status` ENABLE KEYS */;
 
+
 -- Дамп структуры для функция teljournal.faddNewUser
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `faddNewUser`(
@@ -200,6 +200,7 @@ return i_ws_url;
 END//
 DELIMITER ;
 
+
 -- Дамп структуры для функция teljournal.fGetUserPassSha
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `fGetUserPassSha`(`eUserLog` VARCHAR(50)) RETURNS varchar(150) CHARSET utf8
@@ -211,6 +212,7 @@ where tu.USER_LOGIN = eUserLog
 );
 END//
 DELIMITER ;
+
 
 -- Дамп структуры для функция teljournal.fisExistsUserLogin
 DELIMITER //
@@ -230,6 +232,7 @@ where u.USER_LOGIN = eLogin
 end//
 DELIMITER ;
 
+
 -- Дамп структуры для функция teljournal.fisExistsUserMail
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `fisExistsUserMail`(
@@ -248,6 +251,7 @@ where u.USER_MAIL = eMail
 end//
 DELIMITER ;
 
+
 -- Дамп структуры для функция teljournal.fisUIDExists
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `fisUIDExists`(`eUID` VARCHAR(50)) RETURNS int(11)
@@ -259,6 +263,7 @@ where sd.UID = eUID
 );
 END//
 DELIMITER ;
+
 
 -- Дамп структуры для процедура teljournal.getDeviceArgs
 DELIMITER //
@@ -287,6 +292,7 @@ where sd.UID = eUID;
  
 END//
 DELIMITER ;
+
 
 -- Дамп структуры для функция teljournal.getUIDStatus
 DELIMITER //
@@ -319,6 +325,7 @@ return i_status_code;
 END//
 DELIMITER ;
 
+
 -- Дамп структуры для функция teljournal.getUserWebServerUrl
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` FUNCTION `getUserWebServerUrl`(
@@ -347,6 +354,7 @@ end if;
 return iUserWebServerUrl;
 END//
 DELIMITER ;
+
 
 -- Дамп структуры для процедура teljournal.pAddNewUID
 DELIMITER //
@@ -383,6 +391,7 @@ where SOLD_DEVICE_ID = i_sold_device_id;
 END//
 DELIMITER ;
 
+
 -- Дамп структуры для процедура teljournal.rollBackAddNewUser
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` PROCEDURE `rollBackAddNewUser`(IN `eUserLog` VARCHAR(50))
@@ -392,16 +401,18 @@ where USER_LOGIN = eUserLog;
 END//
 DELIMITER ;
 
+
 -- Дамп структуры для процедура teljournal.setUserEnvironment
 DELIMITER //
 CREATE DEFINER=`kalistrat`@`localhost` PROCEDURE `setUserEnvironment`()
 BEGIN
 update user_web_servers uws
-set uws.PERSONAL_WEB_URL = 'http://snslog.ru/personal'
-,uws.WEB_SERVICE_URL = 'http://snslog.ru/userWs/Integration?wsdl'
+set uws.PERSONAL_WEB_URL = 'https://snslog.ru/personal'
+,uws.WEB_SERVICE_URL = 'https://snslog.ru/userWs/Integration?wsdl'
 where uws.SERVER_ID = 1;
 END//
 DELIMITER ;
+
 
 -- Дамп структуры для таблица teljournal.sold_devices
 CREATE TABLE IF NOT EXISTS `sold_devices` (
@@ -465,6 +476,7 @@ INSERT INTO `sold_devices` (`SOLD_DEVICE_ID`, `UID`, `DATE_FROM`, `DEVICE_STATUS
 	(38, 'SEN-X6V3BSRHSMBJ', '2018-04-27 23:23:21', 122, 'CONNECTED', 1, 1);
 /*!40000 ALTER TABLE `sold_devices` ENABLE KEYS */;
 
+
 -- Дамп структуры для таблица teljournal.status
 CREATE TABLE IF NOT EXISTS `status` (
   `STATUS_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -481,6 +493,7 @@ INSERT INTO `status` (`STATUS_ID`, `STATUS_CODE`, `STATUS_NAME`) VALUES
 	(2, 'AWAINTING', 'Ожидает подключения'),
 	(3, 'CONNECTED', 'Подключено');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
+
 
 -- Дамп структуры для таблица teljournal.tj_users
 CREATE TABLE IF NOT EXISTS `tj_users` (
@@ -507,6 +520,7 @@ INSERT INTO `tj_users` (`USER_ID`, `USER_LOGIN`, `USER_PASSWORD`, `USER_MAIL`, `
 	(9, 'semenovna', '4c4de41965012a94d6fcca5abbb792139e5f88f9149af99571be04d6b1afdcee', 'n7.semenov@gmail.com', '159951', 1),
 	(11, 'akmakmakm', '6fee22b68be57b28b3d49a85ec2d979edfb1cbdd2c6a9d440dfe65f25c495fea', 'akminfo11@mail.ru', '159951159', 1);
 /*!40000 ALTER TABLE `tj_users` ENABLE KEYS */;
+
 
 -- Дамп структуры для процедура teljournal.updateSoldDeviceStatus
 DELIMITER //
@@ -576,6 +590,7 @@ end if;
 END//
 DELIMITER ;
 
+
 -- Дамп структуры для таблица teljournal.user_web_servers
 CREATE TABLE IF NOT EXISTS `user_web_servers` (
   `SERVER_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -591,7 +606,6 @@ DELETE FROM `user_web_servers`;
 INSERT INTO `user_web_servers` (`SERVER_ID`, `PERSONAL_WEB_URL`, `WEB_SERVICE_URL`, `COUNT_USERS`) VALUES
 	(1, 'http://localhost:8080/personal', 'http://localhost:8080/userWs/Integration?wsdl', 6);
 /*!40000 ALTER TABLE `user_web_servers` ENABLE KEYS */;
-
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
