@@ -8,15 +8,22 @@ import com.vaadin.ui.themes.ValoTheme;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContexts;
 import org.w3c.dom.Document;
 
+import javax.net.ssl.SSLContext;
 import javax.xml.xpath.XPathFactory;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.security.KeyStore;
 import java.sql.*;
 import java.util.stream.Collectors;
 
@@ -445,7 +452,18 @@ public class tRegistrationWindow extends Window {
     ){
         String respXml = null;
         try {
-            HttpClient client = new DefaultHttpClient();
+
+
+            SSLContext sslContext = SSLContexts.custom()
+                    .loadTrustMaterial((KeyStore)null, new TrustSelfSignedStrategy())
+                    //I had a trust store of my own, and this might not work!
+                    .build();
+
+            CloseableHttpClient client = HttpClients.custom()
+                    .setSSLContext(sslContext)
+                    .setSSLHostnameVerifier(new NoopHostnameVerifier())
+                    .build();
+
             HttpPost post = new HttpPost(argUserWsUrl);
             post.setHeader("Content-Type", "text/xml");
 

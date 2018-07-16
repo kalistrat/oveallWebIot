@@ -21,9 +21,9 @@ CREATE TABLE IF NOT EXISTS `device_status` (
   KEY `FK_device_status_status` (`STATUS_ID`),
   CONSTRAINT `FK_DEVICE_STATUS_sold_devices` FOREIGN KEY (`SOLD_DEVICE_ID`) REFERENCES `sold_devices` (`SOLD_DEVICE_ID`),
   CONSTRAINT `FK_device_status_status` FOREIGN KEY (`STATUS_ID`) REFERENCES `status` (`STATUS_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=156 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы teljournal.device_status: ~133 rows (приблизительно)
+-- Дамп данных таблицы teljournal.device_status: ~121 rows (приблизительно)
 DELETE FROM `device_status`;
 /*!40000 ALTER TABLE `device_status` DISABLE KEYS */;
 INSERT INTO `device_status` (`DEVICE_STATUS_ID`, `STATUS_DATE`, `SOLD_DEVICE_ID`, `STATUS_ID`) VALUES
@@ -147,40 +147,7 @@ INSERT INTO `device_status` (`DEVICE_STATUS_ID`, `STATUS_DATE`, `SOLD_DEVICE_ID`
 	(119, '2018-04-27 23:21:55', 37, 3),
 	(120, '2018-04-27 23:23:21', 38, 1),
 	(121, '2018-04-27 23:23:59', 38, 2),
-	(122, '2018-04-27 23:24:03', 38, 3),
-	(123, '2018-06-08 23:10:31', 39, 1),
-	(124, '2018-06-08 23:10:51', 39, 2),
-	(125, '2018-06-08 23:23:23', 39, 3),
-	(126, '2018-06-08 23:24:41', 40, 1),
-	(127, '2018-06-08 23:25:01', 40, 2),
-	(128, '2018-06-08 23:26:29', 41, 1),
-	(129, '2018-06-08 23:27:34', 40, 3),
-	(130, '2018-06-08 23:28:14', 41, 2),
-	(131, '2018-06-08 23:29:57', 41, 3),
-	(132, '2018-06-08 23:30:42', 41, 1),
-	(133, '2018-06-12 15:52:04', 42, 1),
-	(134, '2018-06-12 15:52:19', 42, 2),
-	(135, '2018-06-12 15:57:05', 43, 1),
-	(136, '2018-06-12 15:57:13', 43, 2),
-	(137, '2018-06-12 16:12:46', 44, 1),
-	(138, '2018-06-12 16:13:04', 44, 2),
-	(139, '2018-06-12 16:14:04', 45, 1),
-	(140, '2018-06-12 16:14:20', 45, 2),
-	(141, '2018-06-12 16:14:41', 46, 1),
-	(142, '2018-06-12 16:14:47', 46, 2),
-	(143, '2018-06-12 16:16:29', 46, 1),
-	(144, '2018-06-12 16:20:53', 43, 1),
-	(145, '2018-06-12 16:20:56', 42, 1),
-	(146, '2018-06-12 16:39:52', 44, 3),
-	(147, '2018-06-12 16:40:36', 45, 3),
-	(148, '2018-06-12 16:42:16', 45, 1),
-	(149, '2018-06-12 16:42:18', 44, 1),
-	(150, '2018-06-12 16:58:08', 47, 1),
-	(151, '2018-06-12 16:58:25', 47, 2),
-	(152, '2018-06-12 17:01:24', 47, 3),
-	(153, '2018-06-12 17:03:26', 47, 1),
-	(154, '2018-06-12 17:05:36', 47, 2),
-	(155, '2018-06-12 17:06:14', 47, 3);
+	(122, '2018-04-27 23:24:03', 38, 3);
 /*!40000 ALTER TABLE `device_status` ENABLE KEYS */;
 
 
@@ -464,9 +431,9 @@ CREATE TABLE IF NOT EXISTS `sold_devices` (
   CONSTRAINT `FK_sold_devices_device_status` FOREIGN KEY (`DEVICE_STATUS_ID`) REFERENCES `device_status` (`DEVICE_STATUS_ID`),
   CONSTRAINT `FK_sold_devices_tj_users` FOREIGN KEY (`USER_ID`) REFERENCES `tj_users` (`USER_ID`),
   CONSTRAINT `FK_sold_devices_user_web_servers` FOREIGN KEY (`SERVER_ID`) REFERENCES `user_web_servers` (`SERVER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COMMENT='Проданные устройства';
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COMMENT='Проданные устройства';
 
--- Дамп данных таблицы teljournal.sold_devices: ~41 rows (приблизительно)
+-- Дамп данных таблицы teljournal.sold_devices: ~37 rows (приблизительно)
 DELETE FROM `sold_devices`;
 /*!40000 ALTER TABLE `sold_devices` DISABLE KEYS */;
 INSERT INTO `sold_devices` (`SOLD_DEVICE_ID`, `UID`, `DATE_FROM`, `DEVICE_STATUS_ID`, `CURRENT_STATUS_CODE`, `USER_ID`, `SERVER_ID`) VALUES
@@ -506,16 +473,7 @@ INSERT INTO `sold_devices` (`SOLD_DEVICE_ID`, `UID`, `DATE_FROM`, `DEVICE_STATUS
 	(35, 'MET-0QNX2U54TZX5', '2018-03-28 22:59:16', 97, 'OUTSIDE', NULL, NULL),
 	(36, 'MET-009710IFQ0BQ', '2018-03-28 22:59:17', 105, 'OUTSIDE', NULL, NULL),
 	(37, 'BRI-7LC6POWPE12U', '2018-04-27 23:21:10', 119, 'CONNECTED', 1, 1),
-	(38, 'SEN-X6V3BSRHSMBJ', '2018-04-27 23:23:21', 122, 'CONNECTED', 1, 1),
-	(39, 'BRI-C4CJZMXKDJDK', '2018-06-08 23:10:31', 125, 'CONNECTED', 1, 1),
-	(40, 'SEN-MRCBPZYVNKLT', '2018-06-08 23:24:41', 129, 'CONNECTED', 1, 1),
-	(41, 'SEN-C17R21QXZD3I', '2018-06-08 23:26:29', 132, 'OUTSIDE', NULL, NULL),
-	(42, 'BRI-U1AUFRTJ8ZTD', '2018-06-12 15:52:03', 145, 'OUTSIDE', NULL, NULL),
-	(43, 'SEN-CIJ5H1ER2U3R', '2018-06-12 15:57:05', 144, 'OUTSIDE', NULL, NULL),
-	(44, 'BRI-N6EZ7ZKS0DHB', '2018-06-12 16:12:46', 149, 'OUTSIDE', NULL, NULL),
-	(45, 'SEN-QJ99D9R2TWDN', '2018-06-12 16:14:04', 148, 'OUTSIDE', NULL, NULL),
-	(46, 'SEN-ODFVZ2K2RV6Q', '2018-06-12 16:14:41', 143, 'OUTSIDE', NULL, NULL),
-	(47, 'MET-QNFAAC0KISU2', '2018-06-12 16:58:07', 155, 'CONNECTED', 1, 1);
+	(38, 'SEN-X6V3BSRHSMBJ', '2018-04-27 23:23:21', 122, 'CONNECTED', 1, 1);
 /*!40000 ALTER TABLE `sold_devices` ENABLE KEYS */;
 
 
@@ -646,7 +604,7 @@ CREATE TABLE IF NOT EXISTS `user_web_servers` (
 DELETE FROM `user_web_servers`;
 /*!40000 ALTER TABLE `user_web_servers` DISABLE KEYS */;
 INSERT INTO `user_web_servers` (`SERVER_ID`, `PERSONAL_WEB_URL`, `WEB_SERVICE_URL`, `COUNT_USERS`) VALUES
-	(1, 'http://localhost:8080/personal', 'http://localhost:8182/userLinkWebService/Integration?wsdl', 6);
+	(1, 'http://localhost:8080/personal', 'http://localhost:8080/userWs/Integration?wsdl', 6);
 /*!40000 ALTER TABLE `user_web_servers` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
